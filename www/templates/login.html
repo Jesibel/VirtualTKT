@@ -1,0 +1,45 @@
+<ion-view view-title="" >
+    <ion-content style="background: url('imgs/Web-Size-1.png') no-repeat center;background-size:100% 100%;" scroll="false">
+		<div class="centrado-middle-login">
+			<div class="list card card-opaco">
+				<div class="item item-login">
+					<img src="http://virtualtkt.com/webimage/logo.png">
+				</div>
+				<div class="item item-body">
+					<form name="form_login" action='javascript:void(0);' ng-submit="login.form_process();" autocomplete="off">
+							<label class="item item-input">
+								<i class="icon ion-ios-email-outline placeholder-icon"></i>
+								<input type="text" placeholder="Email">
+							</label>
+							<label class="item item-input">
+								<i class="icon ion-ios-locked-outline placeholder-icon"></i>
+								<input type="password" placeholder=".........">
+							</label>
+							<button class="button button-block button-calm">Sing In</button> 
+					</form>
+							<div class="row pad0">
+								<div class="col col-45 pad0">
+									<button class="button button-block btn-social btn-facebook" ng-click="loginFacebook()">
+										<i class="icon ion-social-facebook-outline"></i>Sing In
+									</button>
+								</div>
+								<div class="col col-10"><p class="font-or">OR</p></div>
+								<div class="col col-45 pad0">
+									<button class="button button-block btn-social btn-google-plus" ng-click="loginGoogle()">
+										<i class="icon ion-social-googleplus-outline"></i>Sing In
+									</button>
+								</div>							  
+							</div>
+							<a href="#/logout" class="button button-block button-clear button-dark">
+								Olvido su Contraseña
+							</a>
+					
+	
+				</div>
+			</div>
+		</div>
+		<p class="font-login">No tienes cuenta con nosotros? 
+			<a class="color-a" href="#/register" class="button button-block button-clear button-dark">Obtén una ahora.</a>
+		</p>
+    </ion-content>	
+</ion-view>

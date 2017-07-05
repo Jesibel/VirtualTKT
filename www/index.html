@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="ionic_virtual" ng-cloak>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Virtual TKT</title>
+		<link rel="stylesheet" type="text/css" href="css/ionic_index.css" />
+		<link rel="stylesheet" type="text/css" href="css/ionic.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/ionic.filter.bar.min.css" />
+		
+	</head>
+<body>
+
+ <!-- 
+      The nav bar that will be updated as we navigate between views
+      Additional attributes set its look, ion-nav-bar animation and icons
+      Icons provided by Ionicons: http://ionicons.com/ 
+    -->
+    <!--ion-nav-bar class="bar-positive">
+    	<ion-nav-back-button>
+    	</ion-nav-back-button>
+    </ion-nav-bar--->
+
+    <!-- 
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+    <script type="text/javascript">
+    var _ROLES = [],
+    	_ajax = {};
+	_ajax.parseResponse = function(e){var t;try{t=JSON.parse(e.responseText)}catch(n){t=e.responseText}return[t,e]};
+	_ajax.getQueryString=function(e){return Object.keys(e).map(function(t){return encodeURIComponent(t)+"="+encodeURIComponent(e[t])}).join("&")};
+	_ajax.isObject=function(e){return"[object Object]"===Object.prototype.toString.call(e)};
+	_ajax.objectToQueryString=function(e){return this.isObject(e)?this.getQueryString(e):e};
+	_ajax.post=function(url,params,async, fncReady){var xhr = new XMLHttpRequest(),data=params,contentType = 'application/x-www-form-urlencoded';xhr.open( 'POST', url || '', async );xhr.setRequestHeader( 'Content-Type', contentType );xhr.addEventListener( 'readystatechange', fncReady, false );xhr.send( _ajax.objectToQueryString( data ) );}
+		
+    </script>
+
+	<script type="text/javascript" src="js/ionic.min.js"></script>
+    <!-- ngCordova -->
+    <!-- IMPORTANT : SHOULD be after ionic bundle and before cordova.js -->
+	<script type="text/javascript" src="js/ng-cordova.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/angular-filter.js"></script>
+	<script type="text/javascript" src="js/angular-qrcode.js"></script>
+	<script type="text/javascript" src="js/ionic.filter.bar.min.js" ></script>
+	<script type="text/javascript" src="js/dtp/ionic-datepicker.bundle.min.js"></script>
+	<script type="text/javascript" src="js/dtp/ionic-timepicker.bundle.min.js"></script>
+	<script type="text/javascript" src="js/ng-color-picker.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/bc/EAN_UPC.js" ></script>
+	<script type="text/javascript" src="js/bc/JsBarcode.js" ></script>
+	<script type="text/javascript" src="js/ionic-ratings.min.js" ></script>
+	
+	<script type="text/javascript" src="js/ng-cordova-oauth.min.js"></script>
+	
+	<script type="text/javascript" src="js/app.js"></script>
+	<!-- DataServices  -->
+	<script type="text/javascript" src="js/services.js"></script>
+	<script type="text/javascript" src="js/login_service.js"></script>
+	
+	<!-- Controllers  -->
+	<script type="text/javascript" src="js/controllers.js"></script>
+	
+
+</body>
+</html>
