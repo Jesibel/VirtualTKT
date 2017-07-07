@@ -1,0 +1,57 @@
+<ion-view view-title='<img class="title-image" src="../imgs/logo_blanco2.png" width="150" height="43"/>' >
+	<ion-nav-buttons side="right">
+		<button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
+        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">1</span></button>
+    </ion-nav-buttons>
+	<ion-content >
+        <ion-list>
+		<div class="row" style="flex-wrap: wrap;">
+			<div Xng-class="{'col-100' : !isWeb, 'col-50' : isWeb }" class="col">
+				<div style="margin-bottom:0px;padding: 10px;" Xng-class="{'img-menu2': item.item.data_img, 'img-menuOff2': item.item.data_img==null}">
+					<img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="../imgs/cart1.jpg">
+					<!--div ng-if="item.item.data_img" class="banner" style="height:240px; background-image: url('{{item.item.data_img}}');" ></div-->
+					<div class="text-center" style="padding:10px 5px 0px 5px;">
+						<span class="title-order">Abono mensual - dos clases semanales</span>
+						<p>valor abono mensual dos clases por semana</p>
+						<p>LLega a Cordoba 
+							Nick Warren + Jeremy Olander 
+
+							11/08 - Forja Centro de eventos
+
+							Ingreso mayores de 18 años con DNI</p>
+					</div>					
+				</div>
+							
+			</div>
+            <div style="margin-bottom:20px;" class="row del-qty" >
+				<div class="col">
+					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;margin-top: 10px;" translate>Cantidad</div>&nbsp;
+						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
+						<button class="button btn-qty">{{item.qty}}</button>
+						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
+					</h3>
+				</div>				
+			</div>      
+		</div>
+		</ion-list>
+	</ion-content>
+	<div class="bar bar-subfooter text-center" style="bottom:0px !important;">
+		<button ng-click="procesarPago()" class="button button-positive btn-addtocart ion-card">
+			Comprar
+		</button>
+    </div>
+    <!--ion-footer-bar class="bar bar-footer" style="height:60px !important">
+		<div class="tabs tabs-icon-only">
+			<a class="tab-item">
+				<i class="icon ion-ios-home-outline"></i>
+			</a>
+			<a class="tab-item">
+				<i class="icon ion-ios-search"></i>
+			</a>
+			<a class="tab-item">
+				<i class="icon ion-ios-person-outline"></i>
+			</a>
+		</div>
+    </ion-footer-bar-->
+	
+</ion-view>

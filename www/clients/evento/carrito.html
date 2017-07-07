@@ -1,0 +1,128 @@
+<ion-view view-title='<img class="title-image" src="../imgs/logo_blanco2.png" width="150" height="43"/>' >
+	<ion-nav-buttons side="right">
+		<!--button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
+        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">5</span></button-->
+    </ion-nav-buttons>
+	<ion-content>
+	<ion-list>
+	<ion-item class="item check-view" style="padding:0px">
+		<div class="row" style="padding:0px;">
+			<div class="col" style="max-width: 120px !important; max-height: 110px !important;">
+				<img style="width: 100%;" ng-src="../imgs/cart1.jpg" >
+			</div>
+			<div class="col">
+				<span class="title-order">Nick Warren + Jeremy Olander</span>
+				<p style="white-space:pre-line;margin-bottom:0px;margin-top:10px;">
+					Forja centro de eventos - Mauricio Yadarola 1699, Córdoba, Argentina
+					11 de agosto de 2017 a las 23:30
+				</p>	
+			</div>
+		</div>
+		<div style="margin-top:10px;" class="row">
+			<div style="margin-left:25px;" class="col">
+				<div class= "stil-space" style="text-align: right;" >
+					Producto: Acceso
+				</div>
+				<div class="row" style="text-align: right;">
+					<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
+						 Total: $ 5.00
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row del-qty" >
+			<div class="col-90">
+				<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
+					<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
+					<button class="button btn-qty">{{item.qty}}</button>
+					<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
+				</h3>
+			</div>
+			<div class="col" style="padding:0px;">
+				<a on-tap="showDeleteOrder($index);" class="button-icon icon ion-trash-a"></a>
+			</div>
+		</div>                      
+    </ion-item>
+	<ion-item class="item check-view" style="padding:0px">
+		<div class="row" style="padding:0px;">
+			<div class="col" style="max-width: 120px !important; max-height: 110px !important;">
+				<img style="width: 100%;" ng-src="../imgs/cart2.jpg" >
+			</div>
+			<div class="col">
+				<span class="title-order">HOBO + BODELER</span>
+				<p style="white-space:pre-line;margin-bottom:0px;margin-top:10px;">
+					BNP CLUB - Buenos Aires, CABA, Argentina
+					07 de julio de 2017 a las 23:30
+				</p>	
+			</div>
+		</div>
+		<div style="margin-top:10px;" class="row">
+			<div style="margin-left:25px;" class="col">
+				<div class= "stil-space" style="text-align: right;" >
+					Producto: Acceso
+				</div>
+				<div class="row" style="text-align: right;">
+					<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
+						 Total: $ 5.00
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row del-qty" >
+			<div class="col-90">
+				<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
+					<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
+					<button class="button btn-qty">{{item.qty}}</button>
+					<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
+				</h3>
+			</div>
+			<div class="col" style="padding:0px;">
+				<a on-tap="showDeleteOrder($index);" class="button-icon icon ion-trash-a"></a>
+			</div>
+		</div>                      
+    </ion-item>
+                
+	</ion-list>
+		<div class="list" >
+			<div class="item">
+				<div class="row">
+					<div class="col col-75">Item(s) Subtotal</div>
+					<div class="col">$ 5.00</div>
+				</div>
+				<div class="row">
+					<div class="col col-75" style="font-weight:700;"> SubTotal</div>
+					<div class="col" style="font-weight:700;">$ 5.00</div>
+				</div>
+			</div>
+			<div  style="font-weight:700;font-size:18px;" class="item">
+				<div class="row">
+					<div class="col col-75">Total</div>
+					<div class="col">$ 5.00</div>
+				</div>
+			</div>
+
+		</div>
+	</ion-content>
+	
+    <div class="bar bar-subfooter text-center" style="bottom:0px !important;">
+		<button ng-click="procesarPago()" class="button button-positive btn-addtocart ion-card">
+			Procesar Pago
+		</button>
+    </div>
+    <!--ion-footer-bar class="bar bar-footer" style="height:60px !important">
+		<div class="tabs tabs-icon-only">
+			<a class="tab-item">
+				<i class="icon ion-ios-home-outline"></i>
+			</a>
+			<a class="tab-item">
+				<i class="icon ion-ios-search"></i>
+			</a>
+			<a class="tab-item">
+				<i class="icon ion-ios-person-outline"></i>
+			</a>
+		</div>
+    </ion-footer-bar-->
+	
+</ion-view>
