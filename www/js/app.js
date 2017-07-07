@@ -73,7 +73,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
                 cache: true,/*NO TOCAR POR FAVOR, GRACIAS*/
 					views: {
 						"tab-event": {
-							templateUrl: "templates/evento.html",
+							templateUrl: "clients/evento/evento.html",
 							controller: "InitPageCtrl as event"
 						}
 					}
@@ -83,7 +83,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
                 cache: true,
 				views: {
 					"tab-populares": {
-						templateUrl: "templates/populares.html",
+						templateUrl: "clients/populares/populares.html",
 						controller: "PopularesCtrl as popular"
 					}
 				}
@@ -144,7 +144,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
                 cache: true,
 				views: {
 					"tab-event@tabs": {
-						templateUrl: "templates/detalle_orden.html",
+						templateUrl: "clients/evento/detalle_orden.html",
 						controller: "CarritoCtrl"
 					}
 				}
@@ -154,7 +154,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					cache: true,
 					views: {
 						"tab-event@tabs": {
-							templateUrl: "templates/carrito.html",
+							templateUrl: "clients/evento/carrito.html",
 							controller: "CarritoCtrl as car"
 						}
 					}
@@ -182,6 +182,6 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 		  
 			  // if none of the above states are matched, use this as the fallback
 			  //$urlRouterProvider.otherwise('/tab/categories');
-			  $urlRouterProvider.otherwise("/tab/event");
+			  $urlRouterProvider.otherwise("/tab");
 		
 		});
