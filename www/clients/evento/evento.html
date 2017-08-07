@@ -1,34 +1,34 @@
 <ion-view view-title='<img class="title-image" src="../imgs/logo_blanco2.png" width="150" height="43"/>' >
+	
 	<ion-nav-buttons side="right">
 		<button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
         <button ng-click="addToCart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">1</span></button>
     </ion-nav-buttons>
 	<ion-content>
-		<div class="list card">
+	
+		<div ng-repeat="event in evento" class="list card">							
 			<div class="item item-image">
-				<img src="imgs/nick.jpg">
-				<!--div class="item-avatar">
-					<img src="imgs/share.png" width="20" height="20">
-				</div-->
+				<img src="{{event.image_url}}">
 			</div>
+			
 			<div class="item item-image">
 				<div class="row">
-					<div class="col col-20"><h1 class="marginbtn0">11</h1><h2 class="colorh2">Ago</h2></div>
+					<div class="col col-20"><h1 class="marginbtn0"> {{day_format(event.event_start)}}</h1><h2 class="colorh2"> {{mounth_format(event.event_start)}}</h2></div>
 					<div class="col col-80">
-						<h1 class="fonth1 marginbtn0">Nick Warren + Jeremy Olander</h1><h2> BNP producciones</h2>
-						<p>
-						  <a href="#" class="subdued"><i class="icon ion-ios-clock-outline"></i> 7:00PM</a>
-						  <a href="#" class="subdued"><i class="icon ion-cash"></i> 35.00$</a>
-						  <a href="#" class="subdued"><i class="icon ion-ios-location-outline"></i> Caja Magica Miami</a>					  
+						<h1 class="fonth1 marginbtn0 wh-sp"> {{event.name}}</h1><h2> <div ng-repeat="vendor in event.vendor"> {{vendor.name}}</div></h2><br>
+						<p class="wh-sp">
+						  <a href="#" class="subdued"><i class="icon ion-ios-clock-outline colorh2"></i> {{hours_format(event.event_start)}}</a>
+						  <a href="#" class="subdued"><i class="icon ion-cash colorh2"></i> {{event.tickets_min_price}}</a>
+						  <a href="#" class="subdued"><i class="icon ion-ios-location-outline colorh2"></i> {{event.venue_address}}</a>					  
 						</p>
 					</div>
 				</div>				
 				<div class="btn-align">
-					<button ng-click="addToCart()" class="button button-positive btn-addtocart icon ion-android-cart">
+					<button ng-click="addToCart(event)" class="button button-positive btn-addtocart icon ion-android-cart">
 						Comprar Ticket
 					</button>
 				</div>
-			</div>
+			</div>			
 		</div>
 	</ion-content>
 	

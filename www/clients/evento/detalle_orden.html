@@ -1,24 +1,19 @@
 <ion-view view-title='<img class="title-image" src="../imgs/logo_blanco2.png" width="150" height="43"/>' >
 	<ion-nav-buttons side="right">
 		<button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
-        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">1</span></button>
+        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">5</span></button>
     </ion-nav-buttons>
 	<ion-content >
         <ion-list>
-		<div class="row" style="flex-wrap: wrap;">
-			<div Xng-class="{'col-100' : !isWeb, 'col-50' : isWeb }" class="col">
-				<div style="margin-bottom:0px;padding: 10px;" Xng-class="{'img-menu2': item.item.data_img, 'img-menuOff2': item.item.data_img==null}">
-					<img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="../imgs/cart1.jpg">
-					<!--div ng-if="item.item.data_img" class="banner" style="height:240px; background-image: url('{{item.item.data_img}}');" ></div-->
+		<div class="row" style="flex-wrap: wrap;">			
+			<div class="col">
+				<div style="margin-bottom:0px;padding: 10px;">
+					<img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="{{details.image_url}}">
 					<div class="text-center" style="padding:10px 5px 0px 5px;">
-						<span class="title-order">Abono mensual - dos clases semanales</span>
-						<p>valor abono mensual dos clases por semana</p>
-						<p>LLega a Cordoba 
-							Nick Warren + Jeremy Olander 
-
-							11/08 - Forja Centro de eventos
-
-							Ingreso mayores de 18 años con DNI</p>
+						<span ng-if="item.item.price!=0" class="title-order itemfloat fonth1">{{details.tickets_min_price}}</span><br>
+						<span class="title-order fontDT">{{details.name}}</span><br>						
+						<span class="title-order">{{details.vendor_name.name}}</span>						
+						<p>{{details.description}}</p>
 					</div>					
 				</div>
 							

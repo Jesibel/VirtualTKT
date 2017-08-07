@@ -1,11 +1,41 @@
 var _controllers	=	angular.module('ionic_virtual.controllers',[]);
-
-	_controllers.controller('InitPageCtrl', 
-			function($scope, $ionicFilterBar,$ionicFilterBarConfig,$ionicConfig,$state) {
-				
-				$scope.addToCart = function() {
-					console.log('dentro del carrito');
-					 $state.go("tabs.event.comprar", {}, {location: "replace", reload: true});
+	
+_controllers.controller('InitPageCtrl', 
+			function($scope, $ionicFilterBar,$ionicFilterBarConfig,$ionicConfig, $http, $state,EventServ ) {
+				$scope.addToCart = function(evento) {
+					$state.go("tabs.event.comprar", {"eventoDetails": evento}, {location: "replace", reload: true});
+				}
+				$scope.evento = [];
+				/*EventServ.event().then(function(result){
+					console.log(result);
+					if(result.status=='success'){
+						$scope.evento = result.data;
+					}else{
+					
+					}
+				});*/
+				$http({
+					method:'GET',
+					url:'http://dev.virtualtkt.com/api/events/',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				}).then(function(result){
+					//success do something with the result
+					//console.log(result);
+					if(result.data.status=='success'){
+						$scope.evento = result.data.data;
+					}
+				}, function(response){
+					console.log('error'+response);
+					//error show an appropriate message
+				});
+				$scope.day_format = function(lafecha){
+					return moment.utc(lafecha).local().format('DD');
+				}
+				$scope.mounth_format = function(lafecha){
+					return moment.utc(lafecha).local().format('MMM');
+				}
+				$scope.hours_format = function(lafecha){
+					return moment.utc(lafecha).local().format('h:mm a');
 				}
 				
 				$scope.showFilterBar = function() {
@@ -44,6 +74,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 				};
 			}
 	);
+
 	_controllers.controller('PopularesCtrl', 
 		function($scope,$ionicSlideBoxDelegate) {
 			/*_self.sliderOptions = {
@@ -103,11 +134,11 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 	});
 	
 	_controllers.controller('LogInCtrl', 
-		function($scope, $ionicLoading, $state, $ionicHistory, Auth,$cordovaOauth){
+		function($scope, $ionicLoading, $state, $httpParamSerializer, $ionicHistory, Auth,$cordovaOauth,$http){
 			var _self	=	this;
 			
 			_self.m_form = {};
-			
+			console.log('LOGIN');
 			//Auth.logOut();
 			$scope.loginFacebook = function() {
 				$cordovaOauth.facebook("0000000000", ["email"]).then(function(result) {
@@ -127,20 +158,44 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			};
 			
 			_self.form_process = function(){
-				Auth.logIn(_self.m_form).then(function(result){
-					if(result.status==1){
-						$ionicLoading.show({template:result.message, duration :2000  });
-					}else{
-						$ionicHistory.nextViewOptions({
-							disableBack: true
-						  });
-						$state.go('tabs.home', {}); //second parameter is for $stateParams
+				$scope.username='manuel';
+				$scope.password='Aim3$uPR';
+				
+				var data = {
+						username : _self.m_form.username,
+						password : _self.m_form.password
+				};
+				/*$http.post("http://dev.virtualtkt.com/api/check_credentials", _self.m_form).success(function(res){
+					console.log(res);
+				});  */				
+				$http({
+					method: 'POST',
+					data: $httpParamSerializer(data),
+					url:'http://dev.virtualtkt.com/api/check_credentials',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				}).then(function(result){
+					//success do something with the result
+					console.log(result);
+					if(result.data.status=='success'){
+						$scope.evento = result.data.data;
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
+						$state.go('tabs.event', {}); //second parameter is for $stateParams
+					}else if(result.data.status=='error'){
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
 					}
 				});
+				
+				
 			};
 	});
 	_controllers.controller('RegisterCtrl', 
-		function($scope, $ionicLoading, $state, $ionicHistory, Auth){
+		function($scope, $ionicLoading, $state, $httpParamSerializer, $ionicHistory, Auth,$http){
 			var _self	=	this;
 			
 			_self.m_form = {};
@@ -148,20 +203,40 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			//Auth.logOut();
 			
 			_self.form_process = function(){
-				Auth.logIn(_self.m_form).then(function(result){
-					if(result.status==1){
-						$ionicLoading.show({template:result.message, duration :2000  });
+				var data = {
+						username  : _self.m_form.username,
+						password  : _self.m_form.password,
+						firstname : _self.m_form.firstname,
+						lastname  : _self.m_form.lastname,
+						email     : _self.m_form.email,
+						phone     : _self.m_form.phone
+				};
+				console.log(data);
+				$http({
+					method: 'POST',
+					data: $httpParamSerializer(data),
+					url:'http://dev.virtualtkt.com/api/register_user',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				}).then(function(result){
+					//success do something with the result
+					if(result.data.status=='success'){
+						$scope.evento = result.data.data;
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
+						$state.go('login', {}); //second parameter is for $stateParams
 					}else{
-						$ionicHistory.nextViewOptions({
-							disableBack: true
-						  });
-						$state.go('tabs.home', {}); //second parameter is for $stateParams
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
 					}
 				});
 			};
 	});
-	_controllers.controller('LogoutCtrl', 
-		function($scope, $ionicLoading, $state, $ionicHistory, Auth){
+	_controllers.controller('ForgotCtrl', 
+		function($scope, $ionicLoading, $state, $http, $httpParamSerializer, $ionicHistory, Auth){
 			var _self	=	this;
 			
 			_self.m_form = {};
@@ -169,14 +244,28 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			//Auth.logOut();
 			
 			_self.form_process = function(){
-				Auth.logIn(_self.m_form).then(function(result){
-					if(result.status==1){
-						$ionicLoading.show({template:result.message, duration :2000  });
+				var data = {
+						username  : _self.m_form.username
+				};
+				
+				$http({
+					method: 'POST',
+					data: $httpParamSerializer(data),
+					url:'http://dev.virtualtkt.com/api/forgot_password',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				}).then(function(result){
+					//success do something with the result
+					if(result.data.status=='success'){						
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
+						$state.go('login', {}); //second parameter is for $stateParams
 					}else{
-						$ionicHistory.nextViewOptions({
-							disableBack: true
-						  });
-						$state.go('tabs.home', {}); //second parameter is for $stateParams
+						$ionicLoading.show({
+							template: result.data.message,
+							duration: 1500
+						});
 					}
 				});
 			};
@@ -203,7 +292,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			};
 	});
 	_controllers.controller('CarritoCtrl', 
-		function($scope,$ionicSlideBoxDelegate,$state) {
+		function($scope,$ionicSlideBoxDelegate,$state,$stateParams) {
 			$scope.item = {
 				qty: 0
 			};
@@ -219,6 +308,9 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 					qty = 1;
 				}
 			};
+			console.log('detalle');
+			console.log($stateParams.eventoDetails);
+			$scope.details = $stateParams.eventoDetails;
 			$scope.procesarPago = function() {
 					console.log('dentro del carrito');
 					 $state.go("carrito", {}, {location: "replace", reload: true});

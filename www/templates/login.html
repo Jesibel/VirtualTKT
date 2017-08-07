@@ -9,11 +9,11 @@
 					<form name="form_login" action='javascript:void(0);' ng-submit="login.form_process();" autocomplete="off">
 							<label class="item item-input">
 								<i class="icon ion-ios-email-outline placeholder-icon"></i>
-								<input type="text" placeholder="Email">
+								<input type="text" ng-model='login.m_form.username' placeholder="Email">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-locked-outline placeholder-icon"></i>
-								<input type="password" placeholder=".........">
+								<input type="password" ng-model='login.m_form.password' placeholder=".........">
 							</label>
 							<button class="button button-block button-calm">Sing In</button> 
 					</form>
@@ -30,7 +30,7 @@
 									</button>
 								</div>							  
 							</div>
-							<a href="#/logout" class="button button-block button-clear button-dark">
+							<a href="#/forgot" class="button button-block button-clear button-dark">
 								Olvido su Contraseña
 							</a>
 					

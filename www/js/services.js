@@ -78,7 +78,6 @@ var _services	=	angular.module('ionic_virtual.services', []);
 		var _self = this;
 		
 		_self._user = (window.localStorage['usr.data'])?JSON.parse(window.localStorage['usr.data']):{};
-		
 		return {
 			setSession:function(data){
 				_self._user = data;
@@ -91,4 +90,6 @@ var _services	=	angular.module('ionic_virtual.services', []);
 				this.setSession({});
 			}
 		}
-	})
+	});
+	
+	

@@ -1,7 +1,8 @@
 _services.factory('Auth', function($q, AjaxService, app_config, session){
-	var api_call = {'method':'session.login', 'email':null, 'password':null, 'app_ns': 'reifax.service.reward'};
+	var api_call = {'method':'session.login', 'email':null, 'password':null, 'app_ns': 'virtual.service.api'};
 	return {
 		logIn:function(credentials){
+			console.log(credentials);
 			var _defer = $q.defer();
 				api_call.email = credentials.username;
 				api_call.password = credentials.password;
@@ -20,11 +21,5 @@ _services.factory('Auth', function($q, AjaxService, app_config, session){
 		isLogued:function(){
 			return (session.getSession().id>0)?true:false; 
 		},
-		authorize:function(roles){
-			var _user = session.getSession(),
-				exists = (roles)?roles.indexOf(_user.role)!=-1:true;
-
-			return exists;
-		}
 	}		
 });

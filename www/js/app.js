@@ -19,19 +19,20 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 			});
 			
 	        $rootScope.$on('$stateChangeStart', function (event, toState) {
-	        	if(!Auth.authorize(toState.roles)){
+	        	/*if(!Auth.authorize(toState.roles)){
 	        		 event.preventDefault();
-	        	}
+	        	}*/
 	        });
 			
 		});
 
 		app_main.constant('app_config', {
-		    appName: 'Rewards',
+		    appName: 'Virtual',
 		    appVersion: 1.0,
 		    companyID:'bf8d559e62cb766887cb3e7442d623cb',//DEFINE LA COMPANIA CON LA QUE EL APK FINAL TRABAJARA
 		    ROLES:[],
-		    apiUrl: 'http://52.10.82.93/rewards/api/v1/reward_api.php',
+		    //apiUrl: 'http://52.10.82.93/rewards/api/v1/reward_api.php',
+		    apiUrl: 'http://dev.virtualtkt.com/api/',			
 		    weekdays:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 		});
 		
@@ -140,8 +141,11 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 				}
 				})
 				.state("tabs.event.comprar", {
-                url: "/comprar",
+                url: "/comprar",				
                 cache: true,
+				params: {
+                    eventoDetails:null
+                },
 				views: {
 					"tab-event@tabs": {
 						templateUrl: "clients/evento/detalle_orden.html",
@@ -173,15 +177,15 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					templateUrl: "templates/register.html",
 					controller: "RegisterCtrl as register"
 				})
-				.state("logout", {
-					url: "/logout",
+				.state("forgot", {
+					url: "/forgot",
 					cache: false,
-					templateUrl: "templates/logout.html",
-					controller: "LogoutCtrl as logout"
+					templateUrl: "templates/forgot.html",
+					controller: "ForgotCtrl as forgot"
 				});
 		  
 			  // if none of the above states are matched, use this as the fallback
 			  //$urlRouterProvider.otherwise('/tab/categories');
-			  $urlRouterProvider.otherwise("/tab");
+			  $urlRouterProvider.otherwise("/tab/event");
 		
 		});

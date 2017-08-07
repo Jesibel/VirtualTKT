@@ -6,34 +6,34 @@
 					<img src="http://virtualtkt.com/webimage/logo.png">
 				</div>
 				<div class="item item-body">
-					<form name="form_login" action='javascript:void(0);' ng-submit="login.form_process();" autocomplete="off">
+					<form name="form_register" action='javascript:void(0);' ng-submit="register.form_process();" autocomplete="off">
 							<label class="item item-input">
 								<i class="icon ion-ios-star-outline placeholder-icon"></i>
-								<input type="text" placeholder="Nombre de Usuario">
+								<input type="text" ng-model='register.m_form.username' placeholder="Nombre de Usuario">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-person-outline placeholder-icon"></i>
-								<input type="text" placeholder="Nombre">
+								<input type="text"  ng-model='register.m_form.firstname' placeholder="Nombre">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-person-outline placeholder-icon"></i>
-								<input type="text" placeholder="Apellido">
+								<input type="text"  ng-model='register.m_form.lastname' placeholder="Apellido">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-telephone-outline placeholder-icon"></i>
-								<input type="text" placeholder="Telefono">
+								<input type="text"  ng-model='register.m_form.phone' placeholder="Telefono">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-email-outline placeholder-icon"></i>
-								<input type="text" placeholder="Email">
+								<input type="text" ng-model='register.m_form.email' placeholder="Email">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-email-outline placeholder-icon"></i>
-								<input type="text" placeholder="Repetir Email">
+								<input type="text"  ng-model='register.m_form.email2' placeholder="Repetir Email">
 							</label>
 							<label class="item item-input">
 								<i class="icon ion-ios-locked-outline placeholder-icon"></i>
-								<input type="password" placeholder="Contraseña">
+								<input type="password" ng-model='register.m_form.password' placeholder="Contraseña">
 							</label>
             
 							<button class="button button-block button-calm">Registrarse</button> 

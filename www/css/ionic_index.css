@@ -131,6 +131,9 @@ img.add_photo_wrapper{
 .fonth1{
 	font-size: 24px;
 }
+.fontDT{
+	font-size: 20px;
+}
 .marginbtn0{
 	margin-bottom: 0px;
 }
@@ -265,4 +268,10 @@ img.add_photo_wrapper{
 }
 .error-border {
   border: solid 2px red;
+}
+.wh-sp{
+	white-space: normal !important;
+}
+.itemfloat{
+	float:right !important;
 }
