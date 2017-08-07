@@ -182,7 +182,7 @@ _controllers.controller('InitPageCtrl',
 							template: result.data.message,
 							duration: 1500
 						});
-						$state.go('tabs.event', {}); //second parameter is for $stateParams
+						$state.go('tabs.etickets', {}); //second parameter is for $stateParams
 					}else if(result.data.status=='error'){
 						$ionicLoading.show({
 							template: result.data.message,
@@ -332,9 +332,30 @@ _controllers.controller('InitPageCtrl',
 		}
 	);
 	_controllers.controller('eticketsCtrl', 
-		function($scope) {
+		function($scope,$http,$httpParamSerializer) {
+			$scope.evento = [];
+			$scope.username='manuel';
+			$scope.password='Aim3$uPR';
 			
-			  console.log('e-tickets');
+			var data = {
+				username : $scope.username,
+				password : $scope.password
+			};
+			$http({
+				method:'POST',
+				data : $httpParamSerializer(data),
+				url:'http://dev.virtualtkt.com/api/etickets/',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			}).then(function(result){
+				//success do something with the result
+				//console.log(result);
+				if(result.data.status=='success'){
+					$scope.e_ticket = result.data.data;
+				}
+			}, function(response){
+				console.log('error'+response);
+				//error show an appropriate message
+			});
 
 		}
 	);
