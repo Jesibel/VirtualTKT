@@ -6,8 +6,8 @@
             </button>
         </ion-nav-buttons>
 		<ion-nav-buttons side="right">
-			<button on-tap="pro.form_process()" class="button button-dark button-clear" translate>
-				Save
+			<button on-tap="perfil.form_process()" class="button button-dark button-clear" translate>
+				Guardar
 			</button>
 		</ion-nav-buttons>
 
@@ -16,10 +16,10 @@
 		<div class="list card">
 
 			<div class="item item-avatar">
-				<img ng-src="{{pro.m_form.avatar || 'imgs/perfil.jpg'}}" on-tap="pro.getPhoto(1);">
+				<img ng-src="{{perfil.m_form.avatar || 'imgs/perfil.jpg'}}" on-tap="perfil.getPhoto(1);">
 				<label class="item-input item-stacked-label">
 					<span class="input-label" translate>Nombre Usuario</span>
-					<input type="text" ng-model="pro.m_form.full_name">
+					<input class="fonth1" type="text" ng-model="perfil.m_form.username">
 				</label>
 			</div>
 
@@ -28,28 +28,57 @@
 				Información Básica
 				</div>
 
-				<label class="item item-input item-stacked-label notheme">
+				<label class="item item-input notheme">
 					<span class="input-label" translate>Email</span>
-					<input type="text" ng-model="pro.m_form.password">
+					<input type="text" ng-model="perfil.m_form.email">
 				</label>
-
-				<label class="item item-input item-stacked-label notheme">
-					<span class="input-label" translate>Contraseña</span>
-					<input type="password" ng-model="pro.m_form.password">
+				
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Nombre</span>
+					<input type="text" ng-model="perfil.m_form.name">
+				</label>
+				
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Apellido</span>
+					<input type="text" ng-model="perfil.m_form.lname">
 				</label>
 
 				<div class="item item-divider notheme" translate>
-					Personal information
+					Información de Facturación
 				</div>
 
-				<label class="item item-input item-stacked-label notheme">
-					<span class="input-label" translate>Nombre</span>
-					<input type="text" ng-model="pro.m_form.address">
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Movil</span>
+					<input type="text" ng-model="perfil.m_form.movil">
 				</label>
 			  
-				<label class="item item-input item-stacked-label notheme">
-					<span class="input-label" translate>Apellido</span>
-					<input type="text" ng-model="pro.m_form.address">
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Dirección</span>
+					<input type="text" ng-model="perfil.m_form.address">
+				</label>
+				
+				<label class="item item-input item-select notheme">
+					<span class="input-label" translate>País</span>
+					<select
+						ng-options ="count.countryName for count in country"
+						ng-model="perfil.m_form.country">
+					</select>
+					<!--input type="text" ng-model="perfil.m_form.country"-->
+				</label>
+				
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Estado</span>
+					<input type="text" ng-model="perfil.m_form.state">
+				</label>
+				
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Ciudad</span>
+					<input type="text" ng-model="perfil.m_form.city">
+				</label>
+				
+				<label class="item item-input notheme">
+					<span class="input-label" translate>Código Postal</span>
+					<input type="text" ng-model="perfil.m_form.zip">
 				</label>
 			</div>
 		</div>

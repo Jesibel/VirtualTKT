@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar bar-header bar-positive notheme">
 	  <!--button class="button button-clear notheme" ng-click="modal.hide()" translate>Cerrar</button-->
 	   <h1 class="title" translate>Datos de tu ticket</h1>
-	  <button class="button button-clear button-icon ion-ios-close" ng-click="modal.hide()"></button>
+	  <button class="button button-clear button-icon ion-ios-close" ng-click="closeModal()"></button>
 	</ion-header-bar>
 	<ion-content">
 		<div class="list">			
@@ -10,7 +10,7 @@
 				Fecha de tu pago
 			</div>
 			<a class="item" href="#">
-				12 de junio de 2017 a las 21:45
+				{{day_format(dCompra.event_start)}} a las {{hours_format(dCompra.event_start)}}
 			</a>
 			
 			<div class="item item-divider">
@@ -24,20 +24,20 @@
 				Total
 			</div>
 			<a class="item" href="#">
-				$ 270,00
+				$ {{dCompra.payment_total}}
 			</a>
 			
 			<div class="item item-divider">
 				Método de Pago
 			</div>
 			<a class="item" href="#">
-				MercadoPago
+				{{dCompra.payment_mode}}
 			</a>
 			<div class="item item-divider">
 				ID de Compra
 			</div>
 			<a class="item" href="#">
-				7njNbxdF
+				{{d.Compra.payment_uniqid}}
 			</a>
 		</div>
 	</ion-content>

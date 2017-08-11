@@ -16,6 +16,10 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					console.log('splash:hide');
 					$cordovaSplashscreen.hide();
 			    }, 2000);
+				
+				
+				
+				
 			});
 			
 	        $rootScope.$on('$stateChangeStart', function (event, toState) {
@@ -78,17 +82,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 							controller: "InitPageCtrl as event"
 						}
 					}
-				})
-				.state("tabs.populares", {
-                url: "/populares",
-                cache: true,
-				views: {
-					"tab-populares": {
-						templateUrl: "clients/populares/populares.html",
-						controller: "PopularesCtrl as popular"
-					}
-				}
-				})
+				})				
 				.state("tabs.comenzar", {
                 url: "/comenzar",
                 cache: true,
@@ -124,17 +118,30 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
                 url: "/etickets",
                 cache: true,
 				views: {
-					"tab-event@tabs": {
+					"tab-tickets": {
 						templateUrl: "templates/e-tickets.html",
 						controller: "eticketsCtrl as etickets"
 					}
 				}
 				})
-				.state("detalle", {
-                url: "/detalle",
-                cache: true,
+				/*.state("tabs.etickets", {
+                url: "/etickets",
+                cache: true,						
 				views: {
 					"tab-event@tabs": {
+						templateUrl: "templates/e-tickets.html",
+						controller: "eticketsCtrl as etickets"
+					}
+				}
+				})*/
+				.state("tabs.etickets.detalle", {
+                url: "/detalle",
+                cache: true,
+				params: {
+                    ticketDetails:null
+                },	
+				views: {
+					"tab-tickets@tabs": {
 						templateUrl: "templates/detalle_tickets.html",
 						controller: "DetalleTickertsCtrl as detalletickets"
 					}
@@ -184,8 +191,18 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					controller: "ForgotCtrl as forgot"
 				});
 		  
-			  // if none of the above states are matched, use this as the fallback
-			  //$urlRouterProvider.otherwise('/tab/categories');
-			  $urlRouterProvider.otherwise("/tab/event");
+				// if none of the above states are matched, use this as the fallback
+				//$urlRouterProvider.otherwise('/tab/categories');
+				if (window.localStorage.getItem("usuario") != null) {
+					//Hay una sesión iniciada
+					console.log('Hay una sesión iniciada');
+					$urlRouterProvider.otherwise("/tab/event");
+					//Dirige a la pantalla principal ya logueada.
+				} else {
+					console.log('Manda la pantalla de inicio de sesión o autentificación');
+					$urlRouterProvider.otherwise("/login");
+					//Manda la pantalla de inicio de sesión o autentificación
+				}
+			  
 		
 		});

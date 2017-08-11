@@ -129,7 +129,7 @@ img.add_photo_wrapper{
     text-align: right !important;
 }
 .fonth1{
-	font-size: 24px;
+	font-size: 24px !important;
 }
 .fontDT{
 	font-size: 20px;
@@ -274,4 +274,7 @@ img.add_photo_wrapper{
 }
 .itemfloat{
 	float:right !important;
+}
+.center{
+	text-align:center;
 }

@@ -1,12 +1,13 @@
-<ion-view view-title="">	
+<ion-view view-title='<img class="title-image" src="../imgs/logo_blanco2.png" width="150" height="43"/>'>	
 	<ion-content style="top: 84px;">
 		<div ng-repeat="ticket in e_ticket" class="list card">
-			<div class="list">
-				<a class="item item-thumbnail-left" href="#detalle">
+			<div ng-click="detalle(ticket)" class="list">
+				<a class="item item-thumbnail-left"  Xhref="#detalle/{{ticket.payment_uniqid}}">
 				  <img src="{{ticket.image_url}}">
-				  <h2>{{ticket.name}}</h2>
+				  <h2 class="wh-sp">{{ticket.name}}</h2>
 				  <p>{{ticket.status_eticket_name}}</p>
-				  <p class="wh-sp">{{ticket.user_fname}}{{ticket.user_lname}} - {{ticket.user_email}}</p>
+				  <p ng-if="ticket.assistant_name==null" class="wh-sp">{{ticket.user_fname}} {{ticket.user_lname}} - {{ticket.user_email}}</p>
+				  <p ng-if="ticket.assistant_name!=null" class="wh-sp">{{ticket.assistant_name}} - {{ticket.assistant_email}}</p>
 				</a>
 			</div>
 		</div>		
