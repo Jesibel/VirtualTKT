@@ -19,7 +19,7 @@
 				<img ng-src="{{perfil.m_form.avatar || 'imgs/perfil.jpg'}}" on-tap="perfil.getPhoto(1);">
 				<label class="item-input item-stacked-label">
 					<span class="input-label" translate>Nombre Usuario</span>
-					<input class="fonth1" type="text" ng-model="perfil.m_form.username">
+					<input class="fonth1" type="text" ng-model="perfil.m_form.user_uname">
 				</label>
 			</div>
 
@@ -30,17 +30,17 @@
 
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Email</span>
-					<input type="text" ng-model="perfil.m_form.email">
+					<input type="text" ng-model="perfil.m_form.user_email">
 				</label>
 				
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Nombre</span>
-					<input type="text" ng-model="perfil.m_form.name">
+					<input type="text" ng-model="perfil.m_form.user_fname">
 				</label>
 				
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Apellido</span>
-					<input type="text" ng-model="perfil.m_form.lname">
+					<input type="text" ng-model="perfil.m_form.user_lname">
 				</label>
 
 				<div class="item item-divider notheme" translate>
@@ -49,36 +49,36 @@
 
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Movil</span>
-					<input type="text" ng-model="perfil.m_form.movil">
+					<input type="text" ng-model="perfil.m_form.user_mobile">
 				</label>
 			  
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Dirección</span>
-					<input type="text" ng-model="perfil.m_form.address">
+					<input type="text" ng-model="perfil.m_form.user_address">
 				</label>
 				
 				<label class="item item-input item-select notheme">
 					<span class="input-label" translate>País</span>
 					<select
 						ng-options ="count.countryName for count in country"
-						ng-model="perfil.m_form.country">
+						ng-model="perfil.m_form.user_country">
 					</select>
 					<!--input type="text" ng-model="perfil.m_form.country"-->
 				</label>
 				
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Estado</span>
-					<input type="text" ng-model="perfil.m_form.state">
+					<input type="text" ng-model="perfil.m_form.user_state">
 				</label>
 				
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Ciudad</span>
-					<input type="text" ng-model="perfil.m_form.city">
+					<input type="text" ng-model="perfil.m_form.user_city">
 				</label>
 				
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Código Postal</span>
-					<input type="text" ng-model="perfil.m_form.zip">
+					<input type="text" ng-model="perfil.m_form.user_zip">
 				</label>
 			</div>
 		</div>

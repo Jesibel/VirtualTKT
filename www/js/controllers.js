@@ -71,19 +71,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 
 	_controllers.controller('PopularesCtrl', 
 		function($scope,$ionicSlideBoxDelegate) {
-			/*_self.sliderOptions = {
-				//loop: (_self.isWeb ? ($scope.vacH.length > 1 ? true : false) : ($scope.vacV.length > 1 ? true : false)),
-				effect: 'slide',
-				speed: 500,
-				//autoplay:(_self.company.compCarrouselInterval*1000),
-				autoplayDisableOnInteraction: false,
-				pagination: false
-			}
-			$scope.$on("$ionicSlides.sliderInitialized", function(event, data){
-				// data.slider is the instance of Swiper
-				$scope.slider = data.slider;
-			});*/
-			  
+						  
 			  $scope.next = function() {
 				$ionicSlideBoxDelegate.next();
 			  };
@@ -159,8 +147,6 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			};
 			
 			_self.form_process = function(){
-				$scope.username='manuel';
-				$scope.password='Aim3$uPR';
 				
 				var usuario = {};
 				usuario.username = _self.m_form.username;
@@ -290,7 +276,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			var _self	=	this;
 			
 			_self.m_form = {};
-			var datos = {
+			/*var datos = {
 				username  : 'manuel',
 				password  : 'Aim3$uPR',
 				email     : 'empc1982@hotmail.com',
@@ -302,37 +288,48 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 				state     : '',
 				city      : '',
 				zip       : ''
-			};
-		
-			//$scope.perfil = datos;
-			_self.m_form  = datos;
-			console.log(_self.m_form);
-			_self.m_form.username = _self.m_form.username;
-			_self.m_form.password = _self.m_form.password;
-			_self.m_form.email    = _self.m_form.email;
-			_self.m_form.name     = _self.m_form.firstname;
-			_self.m_form.lname    = _self.m_form.lastname;
-			_self.m_form.movil    = _self.m_form.phone;
-			_self.m_form.address  = _self.m_form.address;
-			_self.m_form.country  = _self.m_form.country;
-			_self.m_form.state    = _self.m_form.state;
-			_self.m_form.city     = _self.m_form.city;
-			_self.m_form.zip      = _self.m_form.zip;
+			};*/
+			var user = JSON.parse(window.localStorage.usuario);
 			
-			//Auth.logOut();
+			$scope.username=user.username;
+			$scope.password=user.password;
+			
+			var data1 = {
+				username : $scope.username,
+				password : $scope.password
+			};
+			$http({
+				method: 'POST',
+				data: $httpParamSerializer(data1),
+				url:'http://dev.virtualtkt.com/api/check_credentials',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			}).then(function(result){
+				//success do something with the result
+				
+				if(result.data.status=='success'){
+					_self.m_form = result.data.data;
+					console.log(_self.m_form );				
+				}else if(result.data.status=='error'){
+					/*$ionicLoading.show({
+						template: result.data.message,
+						duration: 1500
+					});*/
+				}
+			});
+		
 			
 			_self.form_process = function(){
 				var data = {
-					username  : _self.m_form.username,
-					password  : _self.m_form.password,
-					firstname : _self.m_form.firstname,
-					lastname  : _self.m_form.lastname,
-					phone     : _self.m_form.phone,
-					address   : _self.m_form.address,
-					country   : _self.m_form.country,
-					state     : _self.m_form.state,
-					city      : _self.m_form.city,
-					zip       : _self.m_form.zip
+					username  : _self.m_form.user_uname,
+					password  : $scope.password,
+					firstname : _self.m_form.user_fname,
+					lastname  : _self.m_form.user_lname,
+					phone     : _self.m_form.user_mobile,
+					address   : _self.m_form.user_address,
+					country   : _self.m_form.user_country,
+					state     : _self.m_form.user_state,
+					city      : _self.m_form.user_city,
+					zip       : _self.m_form.user_zip
 				};
 				$http({
 					method:'POST',
@@ -384,12 +381,12 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 					qty = 1;
 				}
 			};
-			console.log('detalle');
-			console.log($stateParams.eventoDetails);
+		
+			
 			$scope.details = $stateParams.eventoDetails;
 			$scope.procesarPago = function() {
 				console.log('dentro del carrito');
-				 $state.go("carrito", {}, {location: "replace", reload: true});
+				$state.go("carrito", {}, {location: "replace", reload: true});
 			}
 			  
 			$scope.next = function() {
@@ -410,8 +407,10 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 	_controllers.controller('eticketsCtrl', 
 		function($scope,$http,$httpParamSerializer,$state) {
 			$scope.detalle = [];
-			$scope.username='manuel';
-			$scope.password='Aim3$uPR';
+			var user = JSON.parse(window.localStorage.usuario);
+			
+			$scope.username=user.username;
+			$scope.password=user.password;
 			
 			var data = {
 				username : $scope.username,
@@ -472,9 +471,10 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			};
 			
 			
-			$scope.enviar = function (detalle){				
-				$scope.username='manuel';
-				$scope.password='Aim3$uPR';
+			$scope.enviar = function (detalle){
+				var user = JSON.parse(window.localStorage.usuario);
+				$scope.username=user.username;
+				$scope.password=user.password;
 				var data = {
 					username  : $scope.username,
 					password  : $scope.password,
@@ -521,8 +521,9 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			});
 			$scope.openModal = function(payment_uniqid) {
 				$scope.dCompra = [];
-				$scope.username='manuel';
-				$scope.password='Aim3$uPR';
+				var user = JSON.parse(window.localStorage.usuario);
+				$scope.username=user.username;
+				$scope.password=user.password;
 				
 				var data = {
 					username  : $scope.username,
