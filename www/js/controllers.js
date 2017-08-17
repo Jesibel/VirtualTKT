@@ -5,6 +5,9 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			$scope.addToCart = function(evento) {
 				$state.go("tabs.event.comprar", {"eventoDetails": evento}, {location: "replace", reload: true});
 			}
+			$scope.cart = function(evento) {
+				$state.go("carrito", {}, {location: "replace", reload: true});
+			}
 			$scope.evento = [];
 			
 			$http({
