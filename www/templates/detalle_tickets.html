@@ -1,10 +1,17 @@
 <ion-view view-title='<img class="title-image" src="./imgs/logo_blanco2.png" width="150" height="43"/>' >
 	
-	<ion-nav-buttons side="right">
-		<button class="button button-clear button-icon ion-ios-paper" on-tap="openModal(detalle.payment_uniqid)"></button>
-        <button on-tap="modal2.show()" class="button button-icon ion-qr-scanner"></button>
-        <button  ng-if="detalle.assistant_name==null" on-tap="openModal3(detalle)" class="button button-icon ion-ios-email"></button>
-    </ion-nav-buttons>
+		<ion-nav-buttons side="left">
+            <button on-tap="goBack();" class="button button-icon button-clear ion-ios-arrow-back" Xmenu-toggle="left">
+				
+            </button>
+        </ion-nav-buttons>
+		<ion-nav-buttons side="right">
+			<button class="button button-clear button-icon ion-ios-paper" on-tap="openModal(detalle.payment_uniqid)"></button>
+			<button on-tap="openModal2(detalle)" class="button button-icon ion-qr-scanner"></button>
+			<button  ng-if="detalle.assistant_name==null" on-tap="openModal3(detalle)" class="button button-icon ion-ios-email"></button>
+		</ion-nav-buttons>
+	
+	
 	<ion-content>
 		
 		<div class="list">

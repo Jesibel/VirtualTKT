@@ -16,10 +16,6 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					console.log('splash:hide');
 					$cordovaSplashscreen.hide();
 			    }, 2000);
-				
-				
-				
-				
 			});
 			
 	        $rootScope.$on('$stateChangeStart', function (event, toState) {
@@ -103,17 +99,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					}
 				}
 				})
-				.state("tabs.perfil", {
-					url: "/perfil",
-					cache: false,
-					views: {
-					"tab-event@tabs": {
-						templateUrl: "templates/perfil.html",
-						controller: "PerfilCtrl as perfil"
-					}
-					}
-					
-				})	
+				
 				.state("tabs.etickets", {
                 url: "/etickets",
                 cache: true,
@@ -177,6 +163,29 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					cache: false,
 					templateUrl: "templates/login.html",
 					controller: "LogInCtrl as login"
+				})
+				/*.state("tabs.perfil", {
+					url: "/perfil",
+					cache: false,
+					views: {
+					"tab-event@tabs": {
+						templateUrl: "templates/perfil.html",
+						controller: "PerfilCtrl as perfil"
+					}
+					}
+					
+				})*/	
+				.state("perfil", {
+					url: "/perfil",
+					cache: false,
+					templateUrl: "templates/perfil.html",
+					controller: "PerfilCtrl as perfil"
+				})
+				.state("changePass", {
+					url: "/changePass",
+					cache: false,
+					templateUrl: "templates/changePass.html",
+					controller: "changePassCtrl as cambiarPass"
 				})
 				.state("register", {
 					url: "/register",

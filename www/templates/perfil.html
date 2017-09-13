@@ -1,17 +1,16 @@
-<ion-view title="" >
-
-	
-        <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-            </button>
+<ion-view title="Datos Personales" >
+	<ion-nav-bar class="bar-positive">
+         <ion-nav-buttons side="left">
+            <button on-tap="goBack();" class="button button-icon button-clear ion-ios-arrow-back" Xmenu-toggle="left"></button>
         </ion-nav-buttons>
+		<!--ion-nav-back-button class="notheme" type="button" ng-click="goBack(item);"></ion-nav-back-button-->
 		<ion-nav-buttons side="right">
-			<button on-tap="perfil.form_process()" class="button button-dark button-clear" translate>
+			<button on-tap="perfil.form_process()" class="button button-clear" translate>
 				Guardar
 			</button>
 		</ion-nav-buttons>
-
-
+    </ion-nav-bar>
+       
     <ion-content>
 		<div class="list card">
 
@@ -19,7 +18,7 @@
 				<img ng-src="{{perfil.m_form.avatar || 'imgs/perfil.jpg'}}" on-tap="perfil.getPhoto(1);">
 				<label class="item-input item-stacked-label">
 					<span class="input-label" translate>Nombre Usuario</span>
-					<input class="fonth1" type="text" ng-model="perfil.m_form.user_uname">
+					<input disabled="true" class="fonth1" type="text" ng-model="perfil.m_form.user_uname">
 				</label>
 			</div>
 
@@ -30,7 +29,7 @@
 
 				<label class="item item-input notheme">
 					<span class="input-label" translate>Email</span>
-					<input type="text" ng-model="perfil.m_form.user_email">
+					<input disabled="true" type="text" ng-model="perfil.m_form.user_email">
 				</label>
 				
 				<label class="item item-input notheme">
@@ -59,8 +58,8 @@
 				
 				<label class="item item-input item-select notheme">
 					<span class="input-label" translate>País</span>
-					<select
-						ng-options ="count.countryName for count in country"
+					<select					
+						ng-options="count.countryId as count.countryName for count in country"
 						ng-model="perfil.m_form.user_country">
 					</select>
 					<!--input type="text" ng-model="perfil.m_form.country"-->

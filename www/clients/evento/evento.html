@@ -1,26 +1,69 @@
 <ion-view view-title='<img class="title-image" src="./imgs/logo_blanco2.png" width="150" height="43"/>' >
-	
 	<ion-nav-buttons side="right">
-		<button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
+		<!--button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button-->
         <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">2</span></button>
     </ion-nav-buttons>
-	<ion-content>
-	
-		<div ng-repeat="event in evento" class="list card">							
+	<ion-subheader-bar>
+		<div style="margin-top: 95px;" class="list">
+			<label style="border:none;height:50px;" class="item item-input item-select">			
+				<!--select name="show-filter"  ng-model="catFilter.id_categories" ng-options="category.id_categories for category in ourCategories ">
+					<option value="">Filtro</option>
+					<option value="{{category.id_categories}}"></option>
+				</select-->
+				<select ng-model="filter.id_categories">
+					<option value="!!">-- Filtro --</option>
+					<option ng-repeat="category in ourCategories" value="{{category.id_categories}}">{{category.name}}</option>
+				</select>
+			 </label>
+			<!--label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Buscar Categoria" ng-model="catFilter.name_categories">
+			</label-->
+		</div>
+	</ion-subheader-bar>
+	<ion-content class="has-subheader">
+		
+		<div ng-repeat="event in evento |  filter:filter" class="list card">
+		
+			
 			<div class="item item-image">
 				<img src="{{event.image_url}}">
 			</div>
-			
 			<div class="item item-image">
 				<div class="row">
-					<div class="col col-20"><h1 class="marginbtn0"> {{day_format(event.event_start)}}</h1><h2 class="colorh2"> {{mounth_format(event.event_start)}}</h2></div>
-					<div class="col col-80">
-						<h1 class="fonth1 marginbtn0 wh-sp"> {{event.name}}</h1><h2> <div ng-repeat="vendor in event.vendor"> {{vendor.name}}</div></h2><br>
-						<p class="wh-sp">
-						  <a href="#" class="subdued"><i class="icon ion-ios-clock-outline colorh2"></i> {{hours_format(event.event_start)}}</a>
-						  <a href="#" class="subdued"><i class="icon ion-cash colorh2"></i> {{event.tickets_min_price}}</a>
-						  <a href="#" class="subdued"><i class="icon ion-ios-location-outline colorh2"></i> {{event.venue_address}}</a>					  
-						</p>
+				
+					<!--div class="col col-20">
+							<h1 class="marginbtn0"> {{day_format(event.event_start)}}</h1>
+							<h2 class="colorh2"> {{mounth_format(event.event_start)}}</h2>
+						</div-->
+					<div class="col">
+						<h1 class="fonth1 marginbtn0 wh-sp"> {{event.name}}</h1>
+						<div class="row"> 
+							<div class="col">
+								<a href="#" class="subdued"><i class="icon ion-person colorh2"></i> {{event.vendor_name.name}}</a>
+							</div>
+						</div>	
+						<div  class="row"> 
+							<div ng-repeat="cate in event.categories" class="col">
+								<a href="#" class="subdued"><i class="icon ion-pricetag colorh2"></i> {{cate.name}}</a>
+								<span ng-hide="{{cate.id_category}}"></span>								
+							</div>							
+						</div>						
+						<div class="row"> 
+							<div class="col left">
+								<a href="#" class="subdued"><i class="icon ion-ios-calendar colorh2"></i> {{event.event_start_date}}</a>
+							</div>						
+						</div>
+						<div class="row"> 
+							<div class="col left">
+								<a href="#" class="subdued"><i class="icon ion-cash colorh2"></i> Desde {{event.tickets_min_price}}</a>
+							</div>							
+						</div>	
+						<div class="row"> 							
+							<div class="col wh-sp left">
+								<a href="#" class="subdued"><i class="icon ion-ios-location-outline colorh2"></i> {{event.venue_name}} {{event.venue_address}}</a>					  
+							</div>
+						</div>	
 					</div>
 				</div>				
 				<div class="btn-align">
@@ -29,6 +72,7 @@
 					</button>
 				</div>
 			</div>			
+			
 		</div>
 	</ion-content>
 	

@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="false" cache-view="false">
 
 <!-- CONTENIDO DEL MENU EN LA IZQUIERDA -->  
 	<ion-side-menu side="left">
@@ -6,11 +6,13 @@
 	    <h1 class="title">Options</h1>
 	  </ion-header-bar>
 	  <ion-content ng-controller="menuCtrl as mnu">
-	    <ul class="list">
+	    <h4 style="margin-top:10px;" class="title center"> Hola, {{userWelcome}}</h4>
+		<ul class="list">
 	      <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
 			<a ui-sref="tabs.event" class="item" menu-close><i class="icon ion-bookmark"></i> Eventos</a>
 			<a ui-sref="tabs.etickets" class="item" menu-close><i class="icon ion-qr-scanner"></i> e-Tickets</a>	     			
-			<a ui-sref="tabs.perfil" class="item" menu-close><i class="icon ion-android-contact"></i> Mi Cuenta</a>		
+			<a ng-href="#/perfil" class="item" menu-close><i class="icon ion-android-contact"></i> Datos Personales</a>		
+			<a ng-href="#/changePass" class="item" menu-close><i class="icon ion-key"></i> Cambiar Contraseña</a>		
 			<a ng-if="mnu.isLogged==''" on-tap="log_in()" ng-href="#/login" class="item" menu-close><i class="icon ion-log-in"></i> Log in</a>	      
 			<a ng-if="mnu.isLogged!=null" on-tap="log_out()" ng-href="#/login" class="item" menu-close><i class="icon ion-log-out"></i> Log out</a>	      
 	    </ul>
