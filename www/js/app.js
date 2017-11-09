@@ -142,7 +142,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 				views: {
 					"tab-event@tabs": {
 						templateUrl: "clients/evento/detalle_orden.html",
-						controller: "CarritoCtrl"
+						controller: "ComprarCtrl"
 					}
 				}
 				})

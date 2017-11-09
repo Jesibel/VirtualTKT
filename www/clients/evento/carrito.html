@@ -4,88 +4,53 @@
         <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">5</span></button-->
     </ion-nav-buttons>
 	<ion-content>
+	<div ng-if="cart.listCart().length>0">
 	<ion-list>
-	<ion-item class="item check-view" style="padding:0px">
-		<div class="row" style="padding:0px;">
-			<div class="col" style="max-width: 120px !important; max-height: 110px !important;">
-				<img style="width: 100%;" ng-src="./imgs/cart1.jpg" >
-			</div>
-			<div class="col">
-				<span class="title-order">Nick Warren + Jeremy Olander</span>
-				<p style="white-space:pre-line;margin-bottom:0px;margin-top:10px;">
-					Forja centro de eventos - Mauricio Yadarola 1699, Córdoba, Argentina
-					11 de agosto de 2017 a las 23:30
-				</p>	
-			</div>
-		</div>
-		<div style="margin-top:10px;" class="row">
-			<div style="margin-left:25px;" class="col">
-				<div class= "stil-space" style="text-align: right;" >
-					Producto: Acceso
+	<div ng-repeat="itemcart in cart.listCart() track by $index">
+		<ion-item class="item check-view" style="padding:0px">
+			<div class="row" style="padding:0px;">
+				<div class="col" style="max-width: 120px !important; max-height: 110px !important;">
+					<img style="width: 100%;" ng-src="{{itemcart.event.image_url}}" >
 				</div>
-				<div class="row" style="text-align: right;">
-					<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
-						 Total: $ 5.00
+				<div class="col">
+					<span class="title-order">{{itemcart.event.event_name}}</span>
+					<p style="white-space:pre-line;margin-bottom:0px;margin-top:10px;">
+						{{itemcart.event.venue_name}} - {{itemcart.event.venue_address}}
+						{{itemcart.event.event_start}}
+					</p>	
+				</div>
+			</div>
+			<div style="margin-top:10px;" class="row">
+				<div style="margin-left:25px;" class="col">
+					<div class= "stil-space" style="text-align: right;" >
+						Producto: {{itemcart.event.title}}
+					</div>
+					<div class="row" style="text-align: right;">
+						<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
+							 Total: {{itemcart.event.price_string}}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="row del-qty" >
-			<div class="col-90">
-				<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
-					<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
-					<button class="button btn-qty">{{item.qty}}</button>
-					<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
-				</h3>
-			</div>
-			<div class="col" style="padding:0px;">
-				<a on-tap="showDeleteOrder($index);" class="button-icon icon ion-trash-a"></a>
-			</div>
-		</div>                      
-    </ion-item>
-	<ion-item class="item check-view" style="padding:0px">
-		<div class="row" style="padding:0px;">
-			<div class="col" style="max-width: 120px !important; max-height: 110px !important;">
-				<img style="width: 100%;" ng-src="./imgs/cart2.jpg" >
-			</div>
-			<div class="col">
-				<span class="title-order">HOBO + BODELER</span>
-				<p style="white-space:pre-line;margin-bottom:0px;margin-top:10px;">
-					BNP CLUB - Buenos Aires, CABA, Argentina
-					07 de julio de 2017 a las 23:30
-				</p>	
-			</div>
-		</div>
-		<div style="margin-top:10px;" class="row">
-			<div style="margin-left:25px;" class="col">
-				<div class= "stil-space" style="text-align: right;" >
-					Producto: Acceso
+			<div class="row del-qty" >
+				<div class="col-90">
+					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
+						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
+						<button class="button btn-qty">{{item.qty}}</button>
+						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
+					</h3>
 				</div>
-				<div class="row" style="text-align: right;">
-					<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
-						 Total: $ 5.00
-					</div>
+				<div class="col" style="padding:0px;">
+					<a on-tap="showDeleteEvento($index);" class="button-icon icon ion-trash-a"></a>
 				</div>
-			</div>
-		</div>
-
-		<div class="row del-qty" >
-			<div class="col-90">
-				<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
-					<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
-					<button class="button btn-qty">{{item.qty}}</button>
-					<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
-				</h3>
-			</div>
-			<div class="col" style="padding:0px;">
-				<a on-tap="showDeleteOrder($index);" class="button-icon icon ion-trash-a"></a>
-			</div>
-		</div>                      
-    </ion-item>
-                
+			</div>                      
+		</ion-item>
+	</div>
+	            
 	</ion-list>
-		<div class="list" >
+	</div>
+		<div class="list" ng-if="cart.listCart().length>0">
 			<div class="item">
 				<div class="row">
 					<div class="col col-75">Item(s) Subtotal</div>
@@ -106,7 +71,7 @@
 		</div>
 	</ion-content>
 	
-    <div class="bar bar-subfooter text-center" style="bottom:0px !important;">
+    <div ng-if="cart.listCart().length>0" class="bar bar-subfooter text-center" style="bottom:0px !important;">
 		<button ng-click="procesarPago()" class="button button-positive btn-addtocart ion-card">
 			Procesar Pago
 		</button>

@@ -38,6 +38,68 @@ var _services	=	angular.module('ionic_virtual.services', []);
             }
 		};
     });
+	
+	
+	_services.factory('ShoppingCartService', function($q, AjaxService) {
+    var shoppingCart = {},
+        _version = 1,
+        user = null;
+    (function() {
+		user = 12;
+   
+        if (window.localStorage.getItem('cartEvent') !== null && window.localStorage.getItem('cartEvent') !== 'null') {
+            shoppingCart = JSON.parse(window.localStorage.cartEvent);
+        }
+        _integridad();
+    })();
+    /*
+    REVISA LA INTEGRIDAD DE LA ESTRUCTURA, YA QUE EL JSON PARSE PUEDE DEVOLVER NULO
+    O TENGAMOS UNA ESTRUCTURA VIEJA O MAL FORMADA
+    */
+    function _integridad() {
+        //SECCION PARA LA COMPANIA AUN NO SE CREADO
+        if ((typeof shoppingCart[user] === "undefined") || (typeof shoppingCart[user].length === "undefined")) {
+            //JSON MALFORMADO O STRUCTURA ANTIGUA
+            if (!shoppingCart || (typeof shoppingCart.version == "undefined") || shoppingCart.version != _version) shoppingCart = {};
+
+            shoppingCart[user] = []; //CREAR
+
+        }
+        shoppingCart.version = _version;
+        _escribir();
+    }
+
+    function _escribir() {
+        window.localStorage.cartEvent = JSON.stringify(shoppingCart);
+    }
+	
+    var service = {
+        version: _version,
+        cont: function() {
+            return (shoppingCart[user].length);
+        },
+        // The interface you want to expose
+        add: function(evento) {
+            shoppingCart[user].push(evento);
+            _escribir();
+        },
+        listCart: function() {
+            return shoppingCart[user];
+        },
+        update: function() {},
+        deleteCart: function() {
+            //shoppingCart[user].splice(evento, 1);
+            shoppingCart[user] = [];
+            _escribir();
+        },
+        deleteItemCart: function(evento) {            
+            shoppingCart[user].splice(evento, 1);
+           _escribir();
+        },
+		
+    };
+    return service;
+});
 		/*
 		 * 
 		 */

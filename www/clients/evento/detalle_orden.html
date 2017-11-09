@@ -3,24 +3,73 @@
 		<button on-tap="goBack();" class="button button-icon button-clear ion-ios-arrow-back" Xmenu-toggle="left"></button>
 	</ion-nav-buttons>
 	<ion-nav-buttons side="right">
-		<button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
-        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">2</span></button>
+		<!--button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button-->
+        <button ng-if="countBadge!=0" ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">{{countBadge}}</span></button>
     </ion-nav-buttons>
 	<ion-content >
         <ion-list>
-		<div class="row" style="flex-wrap: wrap;">			
+		<div class="row" style="flex-wrap: wrap;">	
 			<div class="col">
 				<div style="margin-bottom:0px;padding: 10px;">
-					<img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="{{details.image_url}}">
+					<!--img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="{{details.image_url}}"-->
 					<div class="text-center" style="padding:10px 5px 0px 5px;">
-						<span ng-if="item.item.price!=0" class="title-order itemfloat fonth1">{{details.tickets_min_price}}</span><br>
+						<!--span ng-if="item.item.price!=0" class="title-order itemfloat fonth1">{{details.tickets_min_price}}</span><br-->
 						<span class="title-order fontDT">{{details.name}}</span><br>						
 						<span class="title-order">{{details.vendor_name.name}}</span>						
-						<p>{{details.description}}</p>
+						<!--p>{{details.description}}</p-->
 					</div>					
-				</div>
-							
+				</div>							
 			</div>
+		</div>
+		<div class="row item item-divider notheme">
+			<div>Tipo de ticket</div>
+		</div>
+		<div class="row" ng-repeat="tipo in detalleTicket" style="flex-wrap: wrap;">			
+			<div class="col pad0">
+				<div class="row" style="margin-bottom:0px;padding: 10px;">
+					<div class="col pad0 text-center" style="padding:10px 5px 0px 5px;">
+						<div class="row pad0">
+							<div class="col pad0">{{tipo.title}}</div>
+							<div class="col pad0">{{tipo.type_ticket}}</div>
+							<div class="col pad0">{{tipo.price_string}}</div>
+						</div>
+						<!--span class="title-order fonth1">{{tipo.title}} - {{tipo.type_ticket}}</span-->																
+					</div>
+					<!--div class="col text-center" style="padding:10px 5px 0px 5px;">											
+						<span class="title-order fonth1">{{tipo.price_string}}</span>						
+					</div-->					
+				</div>						
+			</div>
+			<div style="margin-bottom:20px;" class="row del-qty" >
+				<div class="col">
+					<label style="height:45px;" class="item item-input item-select">
+						<select>
+							<option value="0">0</option>
+							<option ng-repeat="item in longList" >
+								{{ item }}
+							</option>
+						</select>
+					</label>
+					<!--h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;margin-top: 10px;">Cantidad</div>&nbsp;
+						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
+						<button class="button btn-qty">{{item.qty}}</button>
+						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
+					</h3-->
+				</div>				
+			</div>   
+		</div>	
+		<!--div class="row" style="flex-wrap: wrap;">	
+			<div class="col">
+				<div class="row" style="margin-bottom:0px;padding: 10px;">
+					<div class="text-center col" style="padding:10px 5px 0px 5px;">
+						<span class="title-order fonth1">Tribuna Izq</span><br>																	
+					</div>
+					<div class="text-center col" style="padding:10px 5px 0px 5px;">										
+						<span class="title-order fonth1">$600</span>						
+					</div>					
+				</div>						
+			</div>
+			
             <div style="margin-bottom:20px;" class="row del-qty" >
 				<div class="col">
 					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;margin-top: 10px;" translate>Cantidad</div>&nbsp;
@@ -30,11 +79,11 @@
 					</h3>
 				</div>				
 			</div>      
-		</div>
+		</div-->
 		</ion-list>
 	</ion-content>
 	<div class="bar bar-subfooter text-center" style="bottom:0px !important;">
-		<button ng-click="procesarPago()" class="button button-positive btn-addtocart ion-card">
+		<button Xng-click="addToCart2(detalleTicket)" ng-click="procesarCarrito()" class="button button-positive btn-addtocart ion-card">
 			Comprar
 		</button>
     </div>

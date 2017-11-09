@@ -1,7 +1,8 @@
 var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 	
 	_controllers.controller('InitPageCtrl', 
-		function($scope, $ionicFilterBar,$ionicFilterBarConfig,$ionicConfig, $http, $state,EventServ ) {
+		function($scope, $ionicFilterBar,$ionicFilterBarConfig,$ionicConfig, $http, $state,EventServ,ShoppingCartService ) {
+			$scope.countBadge = ShoppingCartService.cont();
 			$scope.addToCart = function(evento) {
 				$state.go("tabs.event.comprar", {"eventoDetails": evento}, {location: "replace", reload: true});
 			}
@@ -419,8 +420,161 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			
 	});
 	_controllers.controller('CarritoCtrl', 
-		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams) {
+		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,ShoppingCartService,$ionicPopup,$ionicListDelegate) {
+			
+			$scope.cart = ShoppingCartService;
+			$scope.countBadge = ShoppingCartService.cont();
 			$scope.item = {
+				qty: 0
+			};
+			$scope.increaseItemCount = function(qty,index) {
+				qty++;
+				$scope.item.qty = qty++;
+			};
+			$scope.decreaseItemCount = function(qty,index) {
+			   if (qty > 1){
+					qty--;
+					$scope.item.qty = qty--;				 
+				}else{
+					qty = 1;
+				}
+			};
+			$scope.goBack = function()  {				
+				var backview = '';
+				angular.forEach($ionicHistory.viewHistory().views, function(view, index){
+					if (view.stateName == "tabs.event.comprar"){
+						backview = "tabs.event";
+					}
+					
+				});
+				$state.go(backview, {}, {location: "replace", reload: true});
+			}
+		
+			
+			$scope.details = $stateParams.eventoDetails;
+			$scope.procesarPago = function() {
+				console.log('dentro del carrito');
+				$state.go("carrito", {}, {location: "replace", reload: true});
+			}
+			
+			$scope.showDeleteEvento = function(evento) {
+				var confirmPopup = $ionicPopup.confirm({
+					title:('Borrar'),
+					template: ('Esta seguro que desea elimnar evento del carrito'),
+					cancelText: ('cancelar'),
+					okText: ('ok')
+				}).then(function(remove) {
+					if (remove) {
+						ShoppingCartService.deleteItemCart(evento);
+					}
+					$ionicListDelegate.closeOptionButtons();
+				});
+			};
+			  
+			$scope.next = function() {
+				$ionicSlideBoxDelegate.next();
+			};
+			$scope.previous = function() {
+				$ionicSlideBoxDelegate.previous();
+			};
+
+			// Called each time the slide changes
+			$scope.slideChanged = function(index) {
+				console.log(index);
+				$scope.slideIndex = index;
+			};
+
+		}
+	);
+	_controllers.controller('ComprarCtrl', 
+		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,$http,$httpParamSerializer,ShoppingCartService) {
+			$scope.detalle = [];
+			$scope.countBadge = ShoppingCartService.cont();
+			$scope.carrito = {
+				event: {
+					qty: 1,
+					id_event: '',
+					event_name: '',
+					venue_address: '',
+					price_string: '',
+					venue_name: '',
+					image_url: ''
+				}
+			};
+			var user = JSON.parse(window.localStorage.usuario);
+			console.log($stateParams.eventoDetails.id_event);
+			$scope.id_event = $stateParams.eventoDetails.id_event;
+			$scope.username=user.username;
+			$scope.password=user.password;
+			
+			var data = {
+				username : $scope.username,
+				password : $scope.password,
+				id_event : $scope.id_event
+			};
+			$http({
+				method:'POST',
+				data : $httpParamSerializer(data),
+				url:'http://dev.virtualtkt.com/api/tickets_available_event/',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			}).then(function(result){
+				if(result.data.status=='success'){
+					$scope.details = $stateParams.eventoDetails;
+					$scope.detalleTicket = result.data.data;
+	
+					console.log($scope.detalleTicket);
+					$scope.detalleTicket.forEach(function(e){
+						console.log(e);
+						$scope.cantidad = e.ticket_limit;
+						$scope.carrito.event.id_event = e.id_event;
+						$scope.carrito.event.event_name = e.event_name;
+						$scope.carrito.event.venue_address = e.venue_address;
+						$scope.carrito.event.price_string = e.price_string;
+						$scope.carrito.event.venue_name = e.venue_name;
+						$scope.carrito.event.image_url = e.image_url;
+					});
+					$scope.longList  = [];
+					for(var i=1;i<=$scope.cantidad; i++){
+						$scope.longList.push(i);
+					}
+					console.log($scope.longList);
+					$scope.item = {
+						qty: 0
+					};
+					$scope.increaseItemCount = function(qty,index) {
+						qty++;
+						$scope.item.qty = qty++;
+					};
+					$scope.decreaseItemCount = function(qty,index) {
+					   if (qty > 1){
+							qty--;
+							$scope.item.qty = qty--;				 
+						}else{
+							qty = 1;
+						}
+					};
+				}
+			});
+			
+			
+			$scope.procesarCarrito = function() {
+				console.log('dentro del carrito');
+				ShoppingCartService.add($scope.carrito, user);
+				$scope.countBadge = ShoppingCartService.cont() + 1;
+				$state.go("carrito", {}, {location: "replace", reload: true});
+			}
+			
+			$scope.goBack = function()  {				
+				var backview = '';
+				angular.forEach($ionicHistory.viewHistory().views, function(view, index){
+					if (view.stateName == "tabs.event.comprar"){
+						backview = "tabs.event";
+					}
+					
+				});
+				$state.go(backview, {}, {location: "replace", reload: true});
+			}
+			/*$scope.item = {
 				qty: 0
 			};
 			$scope.increaseItemCount = function(qty,index) {
@@ -464,7 +618,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			$scope.slideChanged = function(index) {
 				console.log(index);
 				$scope.slideIndex = index;
-			};
+			};*/
 
 		}
 	);
