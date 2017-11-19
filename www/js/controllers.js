@@ -32,7 +32,6 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 						$scope.string.push($scope.stringNew);
 						
 					});	
-						console.log($scope.string);
 				}
 			}, function(response){
 				console.log('error'+response);
@@ -158,7 +157,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			}
 			
 			$scope.log_out = function() {
-				console.log('log-out');
+				//console.log('log-out');
 				localStorage.removeItem("usuario");
 			}
 			var usuario = JSON.parse(window.localStorage.usuario);
@@ -178,7 +177,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			}).then(function(result){
 				//success do something with the result				
 				if(result.data.status=='success'){
-					console.log(result.data.data.user_uname);
+					//console.log(result.data.data.user_uname);
 					$scope.userWelcome= result.data.data.user_uname;			
 				}
 			});
@@ -424,17 +423,14 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			
 			$scope.cart = ShoppingCartService;
 			$scope.countBadge = ShoppingCartService.cont();
-			$scope.item = {
-				qty: 0
-			};
 			$scope.increaseItemCount = function(qty,index) {
-				qty++;
-				$scope.item.qty = qty++;
+			   qty++;
+			   $scope.cart.listCart()[index].event.qty = qty++;
 			};
 			$scope.decreaseItemCount = function(qty,index) {
 			   if (qty > 1){
 					qty--;
-					$scope.item.qty = qty--;				 
+					$scope.cart.listCart()[index].event.qty = qty--;
 				}else{
 					qty = 1;
 				}
@@ -452,8 +448,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 		
 			
 			$scope.details = $stateParams.eventoDetails;
-			$scope.procesarPago = function() {
-				console.log('dentro del carrito');
+			$scope.procesarPago = function() {				
 				$state.go("carrito", {}, {location: "replace", reload: true});
 			}
 			
@@ -483,12 +478,27 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 				console.log(index);
 				$scope.slideIndex = index;
 			};
-
+			$scope.importeFinal = function() {
+				var total = sum = 0;
+				angular.forEach($scope.cart.listCart(), function(item, index) {
+					console.log(item.event.price);
+					console.log(item.event.qty);
+					sum = (item.event.price * item.event.qty);
+                    total += sum;
+					
+					
+				});
+				console.log(total);
+				window.localStorage.setItem('total', JSON.stringify(total));
+				return total;
+			}
 		}
 	);
 	_controllers.controller('ComprarCtrl', 
 		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,$http,$httpParamSerializer,ShoppingCartService) {
 			$scope.detalle = [];
+			$scope.cantidad = [];
+			$scope.carro 		= ShoppingCartService;
 			$scope.countBadge = ShoppingCartService.cont();
 			$scope.carrito = {
 				event: {
@@ -498,11 +508,13 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 					venue_address: '',
 					price_string: '',
 					venue_name: '',
-					image_url: ''
+					image_url: '',
+					title: '',
+					id_ticket: ''
 				}
 			};
 			var user = JSON.parse(window.localStorage.usuario);
-			console.log($stateParams.eventoDetails.id_event);
+			//console.log($stateParams.eventoDetails.id_event);
 			$scope.id_event = $stateParams.eventoDetails.id_event;
 			$scope.username=user.username;
 			$scope.password=user.password;
@@ -521,47 +533,60 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 				if(result.data.status=='success'){
 					$scope.details = $stateParams.eventoDetails;
 					$scope.detalleTicket = result.data.data;
-	
-					console.log($scope.detalleTicket);
-					$scope.detalleTicket.forEach(function(e){
-						console.log(e);
-						$scope.cantidad = e.ticket_limit;
+					//console.log($scope.detalleTicket);
+					
+					$scope.detalleTicket.forEach(function(e,j){
+						$scope.cantidad = e.ticket_limit;						
 						$scope.carrito.event.id_event = e.id_event;
 						$scope.carrito.event.event_name = e.event_name;
 						$scope.carrito.event.venue_address = e.venue_address;
 						$scope.carrito.event.price_string = e.price_string;
+						$scope.carrito.event.price = e.price;
 						$scope.carrito.event.venue_name = e.venue_name;
 						$scope.carrito.event.image_url = e.image_url;
-					});
-					$scope.longList  = [];
-					for(var i=1;i<=$scope.cantidad; i++){
-						$scope.longList.push(i);
-					}
-					console.log($scope.longList);
-					$scope.item = {
-						qty: 0
-					};
-					$scope.increaseItemCount = function(qty,index) {
-						qty++;
-						$scope.item.qty = qty++;
-					};
-					$scope.decreaseItemCount = function(qty,index) {
-					   if (qty > 1){
-							qty--;
-							$scope.item.qty = qty--;				 
+						$scope.carrito.event.title = e.title;
+						$scope.carrito.event.id_ticket = e.id_ticket;
+						
+						$scope.longList  = [];
+						console.log($scope.carro.listCart().length);
+						if($scope.carro.listCart().length>0){
+							
+							$scope.carro.listCart().forEach(function(val,ind){																	
+								$scope.TotalCantidad = ($scope.cantidad - val.event.qty);
+								console.log($scope.TotalCantidad);
+								
+							});
+							//if(e.id_ticket==val.id_ticket){
+								for(var i=1;i<=$scope.TotalCantidad; i++){
+									$scope.longList.push(i);
+								}
+							//}
+							//console.log($scope.carro.listCart());
+							//console.log($scope.longList);
 						}else{
-							qty = 1;
+							for(var i=1;i<=$scope.TotalCantidad; i++){
+								$scope.longList.push(i);
+							}
 						}
-					};
+					});
+					
 				}
 			});
 			
 			
+			
+			
 			$scope.procesarCarrito = function() {
-				console.log('dentro del carrito');
+				$scope.detalleTicket.forEach(function(valor,indice){	
+					$scope.carrito.event.qty = valor.cantidades;					
+				});
+				
 				ShoppingCartService.add($scope.carrito, user);
 				$scope.countBadge = ShoppingCartService.cont() + 1;
 				$state.go("carrito", {}, {location: "replace", reload: true});
+			}
+			$scope.cart = function(evento) {
+				$state.go("carrito", {"eventoDetails": evento}, {location: "replace", reload: true});
 			}
 			
 			$scope.goBack = function()  {				

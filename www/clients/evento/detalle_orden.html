@@ -43,9 +43,9 @@
 			<div style="margin-bottom:20px;" class="row del-qty" >
 				<div class="col">
 					<label style="height:45px;" class="item item-input item-select">
-						<select>
+						<select ng-model="tipo.cantidades">
 							<option value="0">0</option>
-							<option ng-repeat="item in longList" >
+							<option value="{{item}}" ng-repeat="item in longList" >
 								{{ item }}
 							</option>
 						</select>

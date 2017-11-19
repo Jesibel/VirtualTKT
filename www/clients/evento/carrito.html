@@ -27,21 +27,31 @@
 					</div>
 					<div class="row" style="text-align: right;">
 						<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
-							 Total: {{itemcart.event.price_string}}
+							 Precio: {{itemcart.event.price_string}} 
+						</div>
+					</div>
+					<div class="row" style="text-align: right;">
+						<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
+							 Cantidad: {{itemcart.event.qty}} 
+						</div>
+					</div>
+					<div class="row" style="text-align: right;">
+						<div class="col" style="font-weight:700;text-align: right;padding-bottom:0px;padding-right:0px;">
+							 Total: {{itemcart.event.price * itemcart.event.qty}} 
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="row del-qty" >
-				<div class="col-90">
-					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;
-						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
-						<button class="button btn-qty">{{item.qty}}</button>
-						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
-					</h3>
-				</div>
-				<div class="col" style="padding:0px;">
+				<!--div class="col-90">
+					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;" translate>Cantidad</div>&nbsp;&nbsp;{{itemcart.event.qty}}
+						<!--button class="button btn-qty" on-tap="decreaseItemCount(itemcart.event.qty,$index)">-</button-->
+						<!--button class="button btn-qty">{{itemcart.event.qty}}</button-->
+						<!--button class="button btn-qty" on-tap="increaseItemCount(itemcart.event.qty,$index)">+</button-->
+					<!--/h3>
+				</div-->
+				<div class="col" style="padding:0px;text-align: right;">
 					<a on-tap="showDeleteEvento($index);" class="button-icon icon ion-trash-a"></a>
 				</div>
 			</div>                      
@@ -51,20 +61,20 @@
 	</ion-list>
 	</div>
 		<div class="list" ng-if="cart.listCart().length>0">
-			<div class="item">
+			<!--div class="item">
 				<div class="row">
-					<div class="col col-75">Item(s) Subtotal</div>
+					<div class="col col-75">Importe Final</div>
 					<div class="col">$ 5.00</div>
 				</div>
 				<div class="row">
 					<div class="col col-75" style="font-weight:700;"> SubTotal</div>
 					<div class="col" style="font-weight:700;">$ 5.00</div>
 				</div>
-			</div>
+			</div-->
 			<div  style="font-weight:700;font-size:18px;" class="item">
 				<div class="row">
-					<div class="col col-75">Total</div>
-					<div class="col">$ 5.00</div>
+					<div class="col col-75">Importe Final</div>
+					<div class="col">$ {{importeFinal()}}</div>
 				</div>
 			</div>
 
