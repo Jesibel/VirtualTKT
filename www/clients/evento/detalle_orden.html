@@ -11,7 +11,7 @@
 		<div class="row" style="flex-wrap: wrap;">	
 			<div class="col">
 				<div style="margin-bottom:0px;padding: 10px;">
-					<!--img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="{{details.image_url}}"-->
+					<img Xng-if="item.item.data_img" style="display:block;margin:0 auto;max-width:100%;" ng-src="{{details.image_url}}">
 					<div class="text-center" style="padding:10px 5px 0px 5px;">
 						<!--span ng-if="item.item.price!=0" class="title-order itemfloat fonth1">{{details.tickets_min_price}}</span><br-->
 						<span class="title-order fontDT">{{details.name}}</span><br>						
@@ -24,62 +24,50 @@
 		<div class="row item item-divider notheme">
 			<div>Tipo de ticket</div>
 		</div>
-		<div class="row" ng-repeat="tipo in detalleTicket" style="flex-wrap: wrap;">			
-			<div class="col pad0">
-				<div class="row" style="margin-bottom:0px;padding: 10px;">
-					<div class="col pad0 text-center" style="padding:10px 5px 0px 5px;">
-						<div class="row pad0">
-							<div class="col pad0">{{tipo.title}}</div>
-							<div class="col pad0">{{tipo.type_ticket}}</div>
-							<div class="col pad0">{{tipo.price_string}}</div>
-						</div>
-						<!--span class="title-order fonth1">{{tipo.title}} - {{tipo.type_ticket}}</span-->																
-					</div>
-					<!--div class="col text-center" style="padding:10px 5px 0px 5px;">											
-						<span class="title-order fonth1">{{tipo.price_string}}</span>						
-					</div-->					
-				</div>						
-			</div>
-			<div style="margin-bottom:20px;" class="row del-qty" >
-				<div class="col">
-					<label style="height:45px;" class="item item-input item-select">
-						<select ng-model="tipo.cantidades">
-							<option value="0">0</option>
-							<option value="{{item}}" ng-repeat="item in longList" >
-								{{ item }}
-							</option>
-						</select>
-					</label>
-					<!--h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;margin-top: 10px;">Cantidad</div>&nbsp;
-						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
-						<button class="button btn-qty">{{item.qty}}</button>
-						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
-					</h3-->
-				</div>				
-			</div>   
-		</div>	
-		<!--div class="row" style="flex-wrap: wrap;">	
-			<div class="col">
-				<div class="row" style="margin-bottom:0px;padding: 10px;">
-					<div class="text-center col" style="padding:10px 5px 0px 5px;">
-						<span class="title-order fonth1">Tribuna Izq</span><br>																	
-					</div>
-					<div class="text-center col" style="padding:10px 5px 0px 5px;">										
-						<span class="title-order fonth1">$600</span>						
-					</div>					
-				</div>						
-			</div>
 			
-            <div style="margin-bottom:20px;" class="row del-qty" >
-				<div class="col">
-					<h3 style="margin-left:25px;font-size: 18px;"><div style="float:left;margin-top: 10px;" translate>Cantidad</div>&nbsp;
-						<button class="button btn-qty" on-tap="decreaseItemCount(item.qty,$index)">-</button>
-						<button class="button btn-qty">{{item.qty}}</button>
-						<button class="button btn-qty" on-tap="increaseItemCount(item.qty,$index)">+</button>
-					</h3>
-				</div>				
-			</div>      
-		</div-->
+						<div ng-repeat="tipo in detalleTicket" style="margin-top: 15px;" class="row list card">
+							<div style="margin-top: 15px;" class="col">
+								<img style="display:block;margin:0 auto;max-width:100%;min-height:100%;" ng-src="{{tipo.image_url}}">
+								
+							</div>
+							<!--div class="col " 
+                                style="max-width: 120px !important; max-height: 110px !important;">
+                                <img  style="width: 100%;" ng-src="{{tipo.image_url}}" >
+                            </div-->
+							<div style="text-align:left;margin-left:10px;margin-top: 15px;" class="col pad0">
+								<p>{{tipo.title}}</p>
+								<p>{{tipo.type_ticket}}</p>
+								<p>{{tipo.price_string}}</p>
+							</div>
+							<div style="margin-top: 50px;" class="col pad0">	
+								<label style="border:none;height:50px;" class="item item-input item-select">			
+								<select ng-model="tipo.cantidades">
+									<option value="!!">0</option>
+									<option ng-repeat="item in longList" value="{{item}}">{{item}}</option>
+								</select>
+							 </label>
+								<!--label class="item item-select" >
+									<!--span class="input-label">Cantidad</span-->
+									<!--select ng-model="tipo.cantidades">
+										<option value="0">Cantidad</option>
+										<option value="{{item}}" ng-repeat="item in longList" >
+											{{ item }}
+										</option>
+									</select>
+									
+								</label-->
+								<!--label style="height:45px;" class="item item-input item-select">
+									<select ng-model="tipo.cantidades">
+										<option value="0">0</option>
+										<option value="{{item}}" ng-repeat="item in longList" >
+											{{ item }}
+										</option>
+									</select>
+								</label-->																
+							</div>
+							
+						</div>
+						
 		</ion-list>
 	</ion-content>
 	<div class="bar bar-subfooter text-center" style="bottom:0px !important;">

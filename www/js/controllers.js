@@ -418,6 +418,52 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			
 			
 	});
+	_controllers.controller('MetodoPagoCtrl', 
+		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,ShoppingCartService,$ionicPopup,$ionicListDelegate) {
+			
+			$scope.cart = ShoppingCartService;
+			$scope.countBadge = ShoppingCartService.cont();
+			
+			$scope.goBack = function()  {				
+				var backview = '';
+				angular.forEach($ionicHistory.viewHistory().views, function(view, index){
+					if (view.stateName == "carrito"){
+						backview = "carrito";
+					}
+					
+				});
+				$state.go(backview, {}, {location: "replace", reload: true});
+			}
+		
+			
+			$scope.details = $stateParams.eventoDetails;
+			// Método ejecutado al hacer clic en el botón
+			var publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a";
+			var prefId = "176234066-fc6d5d5e-2671-4073-ab49-362a98b720b5";
+			$scope.startCheckout = function(){
+				console.log('Inicia el checkout desde tu aplicación');
+				//Iniciar el checkout de MercadoPago
+				MercadoPago.startCheckout(publicKey, prefId, null, false, success, failure);
+			}
+			
+			// Espera los resultados del checkout
+			var success = function(payment) {
+				console.log(payment);
+				if (payment != null){
+					// Listo! El pago ya fue procesado por MP.
+					console.log(JSON.parse(payment).id);
+				} else {
+					alert ("El usuario no concretó el pago.");
+				}
+			};
+			var failure = function(error) {
+				// Error llamando a MercadoPago Plugin
+				console.log("Error MercadoPagoPlugin : " + error);
+			};
+			
+			
+		}
+	);
 	_controllers.controller('CarritoCtrl', 
 		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,ShoppingCartService,$ionicPopup,$ionicListDelegate) {
 			
@@ -449,7 +495,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			
 			$scope.details = $stateParams.eventoDetails;
 			$scope.procesarPago = function() {				
-				$state.go("carrito", {}, {location: "replace", reload: true});
+				$state.go("metodopago", {}, {location: "replace", reload: true});
 			}
 			
 			$scope.showDeleteEvento = function(evento) {
@@ -531,9 +577,10 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			}).then(function(result){
 				if(result.data.status=='success'){
+					
 					$scope.details = $stateParams.eventoDetails;
 					$scope.detalleTicket = result.data.data;
-					//console.log($scope.detalleTicket);
+					console.log($scope.detalleTicket);
 					
 					$scope.detalleTicket.forEach(function(e,j){
 						$scope.cantidad = e.ticket_limit;						
@@ -546,6 +593,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 						$scope.carrito.event.image_url = e.image_url;
 						$scope.carrito.event.title = e.title;
 						$scope.carrito.event.id_ticket = e.id_ticket;
+						$scope.carrito.event.imagen = e.image_url;
 						
 						$scope.longList  = [];
 						console.log($scope.carro.listCart().length);
@@ -557,9 +605,9 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 								
 							});
 							//if(e.id_ticket==val.id_ticket){
-								for(var i=1;i<=$scope.TotalCantidad; i++){
-									$scope.longList.push(i);
-								}
+							for(var i=1;i<=$scope.TotalCantidad; i++){
+								$scope.longList.push(i);
+							}
 							//}
 							//console.log($scope.carro.listCart());
 							//console.log($scope.longList);

@@ -156,6 +156,17 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 						}
 					}
 					
+				})
+				.state("metodopago", {
+					url: "/metodopago",
+					cache: true,
+					views: {
+						"tab-event@tabs": {
+							templateUrl: "clients/evento/metodo_pago.html",
+							controller: "MetodoPagoCtrl as metod"
+						}
+					}
+					
 				})	
 				 /*MODULO AUTH*/
 				.state("login", {
