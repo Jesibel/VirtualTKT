@@ -2,12 +2,13 @@
 	<!--ion-nav-buttons side="right">
 		<button on-tap="openModal2(e_ticket)" class="button button-icon ion-qr-scanner"></button>
 	</ion-nav-buttons-->
-	<ion-content style="top: 84px;">
+	<ion-content style="top: 84px;" overflow-scroll="true">
 		<div ng-repeat="ticket in e_ticket" class="list card">
 			<div class="list">
 				<a  ng-click="detalle(ticket)" class="item item-thumbnail-left"  Xhref="#detalle/{{ticket.payment_uniqid}}">
 				  <img src="{{ticket.image_url}}">
 				  <h2 class="wh-sp">{{ticket.name}}</h2>
+				  <p>Tipo: {{ticket.title}}</p>
 				  <p>{{ticket.status_eticket_name}}</p>
 				  <p ng-if="ticket.assistant_name==null" class="wh-sp">{{ticket.user_fname}} {{ticket.user_lname}} - {{ticket.user_email}}</p>
 				  <p ng-if="ticket.assistant_name!=null" class="wh-sp">{{ticket.assistant_name}} - {{ticket.assistant_email}}</p>					

@@ -281,3 +281,6 @@ img.add_photo_wrapper{
 .left{
 	text-align:left !important;
 }
+.right{
+	text-align: right; !important;
+}

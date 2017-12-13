@@ -79,8 +79,12 @@ var _services	=	angular.module('ionic_virtual.services', []);
             return (shoppingCart[user].length);
         },
         // The interface you want to expose
-        add: function(evento) {
-            shoppingCart[user].push(evento);
+        add: function(tickets) {
+			console.log(tickets);
+			tickets.forEach(function(val,ind){
+				shoppingCart[user].push(val);
+			})
+            //shoppingCart[user].push(evento);
             _escribir();
         },
         listCart: function() {
@@ -153,5 +157,31 @@ var _services	=	angular.module('ionic_virtual.services', []);
 			}
 		}
 	});
-	
-	
+	_services.service('truncateDecimal',
+		function() {
+			return {
+				decimal: function (num, digits) {
+					var numS = num.toString(),
+						decPos = numS.indexOf('.'),
+						substrLength = decPos == -1 ? numS.length : 1 + decPos + digits,
+						trimmedResult = numS.substr(0, substrLength),
+						finalResult = isNaN(trimmedResult) ? 0 : trimmedResult;
+
+					return parseFloat(finalResult);
+				}
+			};
+		}
+	);
+	_services.filter('decimalcoma', function () {
+		return function(input) {
+				var ret=(input)?input.toString().replace(".",","):null;
+				if(ret){
+					var decArr=ret.split(",");
+					if(decArr.length>1){
+						var dec=decArr[1].length;
+						if(dec===1){ret+="0";}
+					}//this is to show prices like 12,20 and not 12,2
+				}
+				return ret;
+			};
+	});
