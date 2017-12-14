@@ -465,9 +465,10 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 		}
 	);
 	_controllers.controller('CarritoCtrl', 
-		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,ShoppingCartService,$ionicPopup,$ionicListDelegate) {
+		function($scope,$ionicSlideBoxDelegate,$state,$ionicHistory,$stateParams,truncateDecimal,ShoppingCartService,$ionicPopup,$ionicListDelegate) {
 			
 			$scope.cart = ShoppingCartService;
+			console.log(ShoppingCartService);
 			$scope.countBadge = ShoppingCartService.cont();
 			$scope.increaseItemCount = function(qty,index) {
 			   qty++;
@@ -527,14 +528,10 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			$scope.importeFinal = function() {
 				var total = sum = 0;
 				angular.forEach($scope.cart.listCart(), function(item, index) {
-					console.log(item.event.price);
-					console.log(item.event.qty);
-					sum = (item.event.price * item.event.qty);
-                    total += sum;
-					
-					
+					sum = (item.price * item.qty);
+                    total += sum;					
 				});
-				console.log(total);
+				total = truncateDecimal.decimal(total,2);
 				window.localStorage.setItem('total', JSON.stringify(total));
 				return total;
 			}
@@ -546,19 +543,7 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 			$scope.cantidad = [];
 			$scope.carro 		= ShoppingCartService;
 			$scope.countBadge = ShoppingCartService.cont();
-			$scope.carrito = {
-				event: {
-					qty: 1,
-					id_event: '',
-					event_name: '',
-					venue_address: '',
-					price_string: '',
-					venue_name: '',
-					image_url: '',
-					title: '',
-					id_ticket: ''
-				}
-			};
+			$scope.carrito = [];
 			var user = JSON.parse(window.localStorage.usuario);
 			//console.log($stateParams.eventoDetails.id_event);
 			$scope.id_event = $stateParams.eventoDetails.id_event;
@@ -580,54 +565,77 @@ var _controllers	=	angular.module('ionic_virtual.controllers',[]);
 					
 					$scope.details = $stateParams.eventoDetails;
 					$scope.detalleTicket = result.data.data;
-					console.log($scope.detalleTicket);
-					
+					$scope.filtro = {cant: "0"};
+									
 					$scope.detalleTicket.forEach(function(e,j){
 						$scope.cantidad = e.ticket_limit;						
-						$scope.carrito.event.id_event = e.id_event;
-						$scope.carrito.event.event_name = e.event_name;
-						$scope.carrito.event.venue_address = e.venue_address;
-						$scope.carrito.event.price_string = e.price_string;
-						$scope.carrito.event.price = e.price;
-						$scope.carrito.event.venue_name = e.venue_name;
-						$scope.carrito.event.image_url = e.image_url;
-						$scope.carrito.event.title = e.title;
-						$scope.carrito.event.id_ticket = e.id_ticket;
-						$scope.carrito.event.imagen = e.image_url;
-						
-						$scope.longList  = [];
-						console.log($scope.carro.listCart().length);
+						$scope.longList  = [];										
+						//console.log($scope.carro.listCart().length);
 						if($scope.carro.listCart().length>0){
-							
 							$scope.carro.listCart().forEach(function(val,ind){																	
-								$scope.TotalCantidad = ($scope.cantidad - val.event.qty);
-								console.log($scope.TotalCantidad);
-								
+								$scope.TotalCantidad = ($scope.cantidad - val.qty);
+								if(e.id_ticket==val.id_ticket){
+									e.ticket_limit_array = [];
+									for(var i=1;i<=$scope.TotalCantidad; i++){
+										e.ticket_limit_array.push(i);
+									}
+								}
 							});
-							//if(e.id_ticket==val.id_ticket){
-							for(var i=1;i<=$scope.TotalCantidad; i++){
-								$scope.longList.push(i);
-							}
-							//}
-							//console.log($scope.carro.listCart());
-							//console.log($scope.longList);
 						}else{
-							for(var i=1;i<=$scope.TotalCantidad; i++){
+							for(var i=1;i<=$scope.cantidad; i++){
 								$scope.longList.push(i);
 							}
 						}
 					});
-					
 				}
 			});
-			
-			
-			
-			
-			$scope.procesarCarrito = function() {
-				$scope.detalleTicket.forEach(function(valor,indice){	
-					$scope.carrito.event.qty = valor.cantidades;					
+						
+			$scope.procesarCarrito = function() {		
+				$scope.detalleTicket.forEach(function(v,k){											
+					$scope.cantidad = document.getElementById('cantidad_'+v.id_ticket+'').value
+					if($scope.cantidad!='' && parseInt($scope.cantidad)>0){
+						console.log(v.id_ticket);						
+						console.log($scope.cantidad);
+						if($scope.carro.listCart().length>0){
+							$scope.carro.listCart().forEach(function(val,ind){																	
+								if(v.id_ticket==val.id_ticket){
+									$scope.q = parseInt(val.qty);
+									$scope.c = parseInt($scope.cantidad);									
+									val.qty = ($scope.q + $scope.c);
+								}else{
+									$scope.carrito.push({
+										qty: $scope.cantidad,
+										id_event: v.id_event,
+										event_name: v.event_name,
+										venue_address: v.venue_address,
+										price_string: v.price_string,
+										price: v.price,
+										venue_name: v.venue_name,
+										image_url: v.image_url,
+										imagen: v.image_url,
+										title: v.title,
+										id_ticket: v.id_ticket
+									});	
+								}
+							});
+						}else{
+							$scope.carrito.push({
+								qty: $scope.cantidad,
+								id_event: v.id_event,
+								event_name: v.event_name,
+								venue_address: v.venue_address,
+								price_string: v.price_string,
+								price: v.price,
+								venue_name: v.venue_name,
+								image_url: v.image_url,
+								imagen: v.image_url,
+								title: v.title,
+								id_ticket: v.id_ticket
+							});							
+						}
+					}										
 				});
+				
 				
 				ShoppingCartService.add($scope.carrito, user);
 				$scope.countBadge = ShoppingCartService.cont() + 1;

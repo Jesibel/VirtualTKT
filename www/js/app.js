@@ -8,7 +8,7 @@
 var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett.ionic.filter.bar','angular.filter', 'ngCordova', 'ngColorPicker', 'ionic-datepicker', 'ionic-timepicker', 'ionic-ratings', 'ionic_virtual.services', 'ionic_virtual.controllers']);
 
 
-		app_main.run(function($ionicPlatform, $cordovaSplashscreen, $timeout, $rootScope, Auth){
+		app_main.run(function($ionicPlatform, $cordovaSplashscreen, $timeout, $rootScope, Auth, $interval){
 			
 			$ionicPlatform.ready(function() {
 				// Wait 2secs before hiding splash screen
@@ -17,6 +17,12 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 					$cordovaSplashscreen.hide();
 			    }, 2000);
 			});
+			//delete local storage cart
+			$interval( function(){
+				//delete localStorage[cartEvent];
+				 window.localStorage.removeItem('cartEvent');
+				// delete all the required localStorage variables by specifying their keys
+			}, 1000 * 60 * 60 * 24);
 			
 	        $rootScope.$on('$stateChangeStart', function (event, toState) {
 	        	/*if(!Auth.authorize(toState.roles)){
@@ -37,7 +43,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 		});
 		
 		app_main.config(
-			function($stateProvider, $urlRouterProvider, ionicDatePickerProvider, ionicTimePickerProvider, app_config ) {
+			function($stateProvider, $ionicConfigProvider, $urlRouterProvider, ionicDatePickerProvider, ionicTimePickerProvider, app_config ) {
 
 				var datePickerObj = {
 			    	inputDate: new Date(),
@@ -216,6 +222,7 @@ var app_main =	angular.module('ionic_virtual', ['ionic', 'ngCordovaOauth', 'jett
 				if (window.localStorage.getItem("usuario") != null) {
 					//Hay una sesión iniciada
 					console.log('Hay una sesión iniciada');
+					$ionicConfigProvider.scrolling.jsScrolling(true)
 					$urlRouterProvider.otherwise("/tab/event");
 					//Dirige a la pantalla principal ya logueada.
 				} else {

@@ -25,51 +25,30 @@
 			<div>Tipo de ticket</div>
 		</div>
 			
-						<div ng-repeat="tipo in detalleTicket" style="margin-top: 15px;" class="row list card">
-							<div style="margin-top: 15px;" class="col">
-								<img style="display:block;margin:0 auto;max-width:100%;min-height:100%;" ng-src="{{tipo.image_url}}">
-								
-							</div>
-							<!--div class="col " 
-                                style="max-width: 120px !important; max-height: 110px !important;">
-                                <img  style="width: 100%;" ng-src="{{tipo.image_url}}" >
-                            </div-->
-							<div style="text-align:left;margin-left:10px;margin-top: 15px;" class="col pad0">
-								<p>{{tipo.title}}</p>
-								<p>{{tipo.type_ticket}}</p>
-								<p>{{tipo.price_string}}</p>
-							</div>
-							<div style="margin-top: 50px;" class="col pad0">	
-								<label style="border:none;height:50px;" class="item item-input item-select">			
-								<select ng-model="tipo.cantidades">
-									<option value="!!">0</option>
-									<option ng-repeat="item in longList" value="{{item}}">{{item}}</option>
-								</select>
-							 </label>
-								<!--label class="item item-select" >
-									<!--span class="input-label">Cantidad</span-->
-									<!--select ng-model="tipo.cantidades">
-										<option value="0">Cantidad</option>
-										<option value="{{item}}" ng-repeat="item in longList" >
-											{{ item }}
-										</option>
-									</select>
-									
-								</label-->
-								<!--label style="height:45px;" class="item item-input item-select">
-									<select ng-model="tipo.cantidades">
-										<option value="0">0</option>
-										<option value="{{item}}" ng-repeat="item in longList" >
-											{{ item }}
-										</option>
-									</select>
-								</label-->																
-							</div>
-							
-						</div>
+		<div ng-repeat="tipo in detalleTicket" style="margin-top: 15px;" class="row list card">
+			<div style="margin-top: 15px;" class="col">
+				<img style="display:block;margin:0 auto;max-width:100%;" ng-src="{{tipo.image_url}}">
+				
+			</div>
+			<div style="text-align:left;margin-left:10px;margin-top: 15px;" class="col pad0">
+				<p>{{tipo.title}}</p>
+				<p>{{tipo.type_ticket}}</p>
+				<p>{{tipo.price_string}}</p>
+			</div>
+			<div style="margin-top: 50px;" class="col pad0">	
+				<label style="border:none;height:50px;" class="item item-input item-select">					
+					<select name="cantidad_{{tipo.id_ticket}}" id="cantidad_{{tipo.id_ticket}}" ng-model="cantidades[$index]">
+						<option value="">0</option>						
+						<option ng-repeat="item in tipo.ticket_limit_array" value="{{item}}">{{item}}</option>
+					</select>
+					
+				</label>	
+			</div>			
+		</div>
+		
 						
 		</ion-list>
-	</ion-content>
+	</ion-content overflow-scroll="true">
 	<div class="bar bar-subfooter text-center" style="bottom:0px !important;">
 		<button Xng-click="addToCart2(detalleTicket)" ng-click="procesarCarrito()" class="button button-positive btn-addtocart ion-card">
 			Comprar
