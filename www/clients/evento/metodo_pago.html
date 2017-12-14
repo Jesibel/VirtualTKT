@@ -1,0 +1,28 @@
+<ion-view view-title='<img class="title-image" src="./imgs/logo_blanco2.png" width="150" height="43"/>' >
+	<ion-nav-buttons side="right">
+		<!--button class="button button-clear button-icon ion-ios-search" on-tap="showFilterBar()"></button>
+        <button ng-click="cart()" class="button button-icon ion-bag"><span style="display:none;" class="badge badge-assertive header-badge">5</span></button-->
+    </ion-nav-buttons>
+	<ion-content overflow-scroll="true">
+	<div ng-if="cart.listCart().length>0">
+	<ion-list>
+		<div class="card">
+			<div class="item item-text-wrap">
+				Seleccione y haga click en proceder para realizar el pago
+			</div>
+			<div style="text-align:center;">
+				<img style="width:50%;" src="./imgs/logo-mercadopago.png">
+			</div>
+		</div>
+	            
+	</ion-list>
+	
+	</ion-content>
+	
+    <div ng-if="cart.listCart().length>0" class="bar bar-subfooter text-center" style="bottom:0px !important;">
+		<button ng-click="startCheckout()" class="button button-positive btn-addtocart ion-card">
+			Proceder
+		</button>
+    </div>
+  	
+</ion-view>
